@@ -1,0 +1,12 @@
+{
+	Ejemplo de un comentario para el Lenguaje a compilar 
+ 	Universidad Panamericana 2020
+}
+ESCRIBIR "Ingrese un numero"
+LEER num
+SI num > 0 VERDADERA
+  ESCRIBIR "El número es positivo"
+SINO
+  ESCRIBIR "El número es cero o negativo"
+[]]
+FIN_SI
