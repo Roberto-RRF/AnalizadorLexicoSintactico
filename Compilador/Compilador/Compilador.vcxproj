@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\lex.yy.c" />
+    <ClCompile Include="..\..\yacc.tab.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\yacc.tab.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

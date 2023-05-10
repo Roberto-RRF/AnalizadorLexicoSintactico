@@ -1,12 +1,14 @@
-{
-	Ejemplo de un comentario para el Lenguaje a compilar 
+{ 
+ 	Ejemplo de un comentario para el Lenguaje a compilar 
  	Universidad Panamericana 2020
 }
-ESCRIBIR "Ingrese un numero"
-LEER num
-SI num > 0 VERDADERA
-  ESCRIBIR "El número es positivo"
-SINO
-  ESCRIBIR "El número es cero o negativo"
-[]]
+LEER x; 
+SI x > 0 VERDADERA 
+  	fact 	= 	1;
+ 	REPETIR
+    		fact  =     fact * x;
+    		x = x - 1
+ 	HASTA x == 1;
+ 	ESCRIBIR fact;
+	ESCRIBIR x
 FIN_SI

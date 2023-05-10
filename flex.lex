@@ -1,5 +1,5 @@
 %{
-    //#include "YACCCompila.tab.h"
+    #include "yacc.tab.h"
     #include <stdlib.h>
     #include <stdio.h>
     #include <malloc.h>
@@ -21,33 +21,35 @@ CADENA "\""([^\"\n])*\"""
 SALTO   [\n]
 %%
 
+
 "SI"             {return TOKEN_SI;}
-"VERDADERA"      {return TOKEN_VERDADERA;}
-"FALSA"          {return TOKEN_FALSA;}
+"VERDADERA"      {return TOKEN_VERDADERO;}
+"FALSA"          {return TOKEN_FALSO;}
 "FIN_SI" 		 {return TOKEN_FIN_SI;}
-"REPETIR"        {return TOKEN_REPETIR;}
+"REPETIR"        {return TOKEN_REPETIR;} 
 "HASTA"          {return TOKEN_HASTA;}
 "LEER"           {return TOKEN_LEER;}
 "ESCRIBIR"       {return TOKEN_ESCRIBIR;}
-"+" 		     {return TOKEN_MAS;}
-"-" 			 {return TOKEN_MENOS;}
-"*" 			 {return TOKEN_MULT;}
-"/" 			 {return TOKEN_DIV;}
-"==" 			 {return TOKEN_IGUAL;}
-"!=" 			 {return TOKEN_DIFERENTE;}
-"<=" 			 {return TOKEN_MENOR_IGUAL;}
-">=" 			 {return TOKEN_MAYOR_IGUAL;}
-";" 			 {return TOKEN_PUNTO_COMA;}
-"(" 			 {return TOKEN_PATENTESIS_ABIERTO;}
-")" 			 {return TOKEN_PATENTESIS_CERRADO;}
-"<" 			 {return TOKEN_MENOR;}
-">" 			 {return TOKEN_MAYOR;}
-"=" 			 {return TOKEN_ASIGNACION;}
+{ID}	         {return TOKEN_IDENTIFICADOR}
+\+  	         {return TOKEN_SUMA;}
+\-			     {return TOKEN_RESTA;}
+\* 			     {return TOKEN_MULT;}
+\/ 			     {return TOKEN_DIV;}
+\=\= 			 {return TOKEN_IGUAL;}
+\!\= 			 {return TOKEN_DIFERENTE;}
+\<\= 			 {return TOKEN_MENOR_IGUAL;}
+\>\= 			 {return TOKEN_MAYOR_IGUAL;}
+\;			     {return TOKEN_PUNTO_COMA;}
+\(			     {return TOKEN_PARENTESIS_IZQUIERDO;}
+\) 			     {return TOKEN_PARENTESIS_DERECHO;}
+\< 			     {return TOKEN_MENOR_QUE;}
+\> 			     {return TOKEN_MAYOR_QUE;}
+\=     		     {return TOKEN_ASIGNACION;}
 {DIGITO}         {return TOKEN_DIGITO;}
-{ID}			 {return TOKEN_ID;}
 {SALTO}			 ; /* ignorar saltos de linea */
 {ESPACIO}        ; /* ignorar espacios en blanco */
 {CADENA}		 {return TOKEN_CADENA;}
+
 
 "{"             {   
                     int c;
@@ -57,7 +59,7 @@ SALTO   [\n]
                     } while (c != EOF && c != '}');
 
                     if (c == '}') {
-                        printf("Comentario Completo %d\n", yylineno);
+                        //printf("Comentario Completo %d\n", yylineno);
                         /* Ignorar todo lo que se encuentre después del comentario */
                         yytext = "";
                         yyleng = 0;
@@ -66,8 +68,7 @@ SALTO   [\n]
                     }
                 }
 
- /* cualquier otra cosa es un error */
-. yyerror("caracter invalido");               
+            
 
 %%
 
