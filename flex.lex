@@ -30,7 +30,7 @@ SALTO   [\n]
 "HASTA"          {return TOKEN_HASTA;}
 "LEER"           {return TOKEN_LEER;}
 "ESCRIBIR"       {return TOKEN_ESCRIBIR;}
-{ID}	         {return TOKEN_IDENTIFICADOR}
+{ID}	         {return TOKEN_IDENTIFICADOR;}
 \+  	         {return TOKEN_SUMA;}
 \-			     {return TOKEN_RESTA;}
 \* 			     {return TOKEN_MULT;}

@@ -1,12 +1,14 @@
 ﻿  lex.yy.c
-lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
+lex.yy.c(662,10): warning C4102: 'find_rule': etiqueta sin referencia
   yacc.tab.c
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(289,24): warning C4273: 'malloc': vinculación de DLL incoherente
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(310,24): warning C4273: 'malloc': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(296,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(317,19): warning C4273: 'free': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1623,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1625,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1410,14): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1415,14): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1420,14): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1659,38): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1661,22): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
   Generando código...
-  LINK : no se encontró C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\Compilador\Debug\Compilador.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
-  Compilador.vcxproj -> C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\Compilador\Debug\Compilador.exe
+  Compilador.vcxproj -> C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\Compilador\Debug\Compilador.exe

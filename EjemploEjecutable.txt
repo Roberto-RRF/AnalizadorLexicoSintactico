@@ -3,7 +3,7 @@
  	Universidad Panamericana 2020
 }
 LEER x; 
-SI x > 0 VERDADERA 
+SI x < 0 VERDADERA 
   	fact 	= 	1;
  	REPETIR
     		fact  =     fact * x;
