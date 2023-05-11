@@ -9,28 +9,25 @@
 #include <string.h>
 #define MAX_ID_SIZE 100
 
+void agregarTablaSimbolos(char *identificador, char metodo, int valor);
+int buscarIndice(char *identificador);
+void imprimirTablaSimbolos();
 
-
-
-// void agregarTablaSimbolos(char *identificador, char metodo, int valor);
-// int buscarIndice(char *identificador);
-// void imprimirTablaSimbolos();
-
-// struct dataType
-// {
-//    char * identificador;
-//    int primeraAparicion;
-//    int usos[100];
-//    int asignaciones[100];
-// } tabla[100];
-// int contadorVariables = 0;
-// int contUsos[100] = {0};
-// int contAsignaciones[100] = {0};
+struct dataType
+{
+   char * identificador;
+   int primeraAparicion;
+   int usos[100];
+   int asignaciones[100];
+} tabla[100];
+int contadorVariables = 0;
+int contUsos[100] = {0};
+int contAsignaciones[100] = {0};
 
 
 extern yyin;
 extern yytext;
-
+extern yylineno;
 
 #pragma warning(disable: 4013 6385 6001 4996)
 %}
@@ -53,13 +50,13 @@ intruccion_if           : TOKEN_SI expresion TOKEN_VERDADERO secuencia_intruccio
 
 intruccion_repeat       : TOKEN_REPETIR secuencia_intrucciones TOKEN_HASTA expresion
 
-intruccion_asignacion   : TOKEN_IDENTIFICADOR { printf("%s",yytext) } TOKEN_ASIGNACION expresion
+intruccion_asignacion   : TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno); } TOKEN_ASIGNACION expresion
 
-intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR { printf("%s",yytext) }
+intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno); }
 
 intruccion_write        : TOKEN_ESCRIBIR expresion
 
-expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple 
+expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                         | expresion_simple TOKEN_MAYOR_QUE expresion_simple
                         | expresion_simple TOKEN_IGUAL expresion_simple
                         | expresion_simple TOKEN_DIFERENTE expresion_simple
@@ -77,103 +74,103 @@ termino                 : termino TOKEN_MULT factor
 
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                         | TOKEN_DIGITO
-                        | TOKEN_IDENTIFICADOR { printf("%s",yytext) }
+                        | TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno);}
 						| TOKEN_CADENA 
 
-       
+
 
 %%
 
 int yyerror(char *s) {
- 
-   char mensaje[100];
 
-   if ( !strcmp( s, "syntax error" ) )
-      strcpy( mensaje, "Error de sintaxis" );
-   else
-      strcpy( mensaje, s );
+    char mensaje[100];
 
-   printf("Error:  %s", mensaje);
-   
- 
-   return 0;
+    if ( !strcmp( s, "syntax error" ) )
+       strcpy( mensaje, "Error de sintaxis" );
+    else
+       strcpy( mensaje, s );
+
+    printf("Error:  %s", mensaje);
+
+
+    return 0;
  }
- 
 
- 
+
+
 int main(int argc, char * argv[])
 {
-   ++argv;
-   --argc;  
-   if (argc > 0)
-         yyin = fopen( argv[0], "r" );
-   else
-         yyin = stdin;
-   
-   
+    	++argv;
+    	--argc;  
+    	if (argc > 0)
+            yyin = fopen( argv[0], "r" );
+    	else
+            yyin = stdin;
 
-   printf("Programa Reconocido");
-   return 0;
+      
+            
+            
+    	yyparse();
+      printf("Programa reconocido");
+    	return 0;
+}
+
+int buscarIndice(char *identificador)
+{
+   if(contadorVariables == 0)
+      return 0;
+   
+   for(unsigned int i = 0; i < contadorVariables; i++)
+      if(tabla[i].identificador == identificador)
+         return i;
+
+   return -1;
 }
 
 
-
-
-// int buscarIndice(char *identificador)
-// {
-//    if(contadorVariables == 0)
-//       return 0;
+void agregarTablaSimbolos(char *identificador, char metodo, int valor)
+{
    
-//    for(unsigned int i = 0; i < contadorVariables; i++)
-//       if(tabla[i].identificador == identificador)
-//          return i;
+   int indice = buscarIndice(identificador);
+   if(indice == 0) // Agregamos la variable porque no esta 
+   {
+      tabla[contadorVariables].identificador = strdup(identificador);
+      printf("%s", tabla[contadorVariables].identificador);
+      tabla[contadorVariables].primeraAparicion = valor;
+      if(metodo == 'U')
+      {
+         tabla[contadorVariables].usos[0] = valor;
+         contUsos[contadorVariables]++;
+      }
+      if(metodo == 'A')
+      {
+         tabla[contadorVariables].asignaciones[0] = valor;
+         contAsignaciones[contadorVariables]++;
+      }
+      contadorVariables++;
+      return;
+   }
+   else
+   {
+      if(metodo == 'U')
+      {
+         tabla[contadorVariables].usos[contUsos[contadorVariables]] = valor;
+         contUsos[contadorVariables]++;
+      }
+      if(metodo == 'A')
+      {
+         tabla[contadorVariables].asignaciones[contAsignaciones[contadorVariables]] = valor;
+         contAsignaciones[contadorVariables]++;
+      }
+      return;
+   }
+}
 
-//    return -1;
-// }
-
-
-// void agregarTablaSimbolos(char *identificador, char metodo, int valor)
-// {
-//    printf("%d", valor);
-//    int indice = buscarIndice(identificador);
-//    if(indice == 0) // Agregamos la variable porque no esta 
-//    {
-//       tabla[contadorVariables].identificador = strdup(identificador);
-//       tabla[contadorVariables].primeraAparicion = valor;
-//       if(metodo == 'U')
-//       {
-//          tabla[contadorVariables].usos[0] = valor;
-//          contUsos[contadorVariables]++;
-//       }
-//       if(metodo == 'A')
-//       {
-//          tabla[contadorVariables].asignaciones[0] = valor;
-//          contAsignaciones[contadorVariables]++;
-//       }
-//       contadorVariables++;
-//       return;
-//    }
-//    else
-//    {
-//       if(metodo == 'U')
-//       {
-//          tabla[contadorVariables].usos[contUsos[contadorVariables]] = valor;
-//          contUsos[contadorVariables]++;
-//       }
-//       if(metodo == 'A')
-//       {
-//          tabla[contadorVariables].asignaciones[contAsignaciones[contadorVariables]] = valor;
-//          contAsignaciones[contadorVariables]++;
-//       }
-//       return;
-//    }
-// }
-
-// void imprimirTablaSimbolos()
-// {
-//    printf("Variable \t Primera Aparicion \t Se Utiliza \t Se Asigna \n");
-//    for(unsigned int i = 0; i < contadorVariables; i++)
-//    {
-//       printf("%s\t %s \n", tabla[i].identificador, tabla[i].primeraAparicion);
-//    }
-// }
+void imprimirTablaSimbolos()
+{
+   printf("Variable \t Primera Aparicion \t Se Utiliza \t Se Asigna \n");
+   for(unsigned int i = 0; i < contadorVariables; i++)
+   {
+      printf("%s\t %s \n", tabla[i].identificador, tabla[i].primeraAparicion);
+   }
+}

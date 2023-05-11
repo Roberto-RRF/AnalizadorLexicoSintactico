@@ -8,8 +8,7 @@
     #pragma warning(disable: 4996 6011 6385 4013)
 
 
-   char cadena[255];
-   int linea = 1;
+   
 %}
 
 %option yylineno
@@ -55,7 +54,7 @@ SALTO   [\n]
                     int c;
                     do {
                         c = input();
-                        if (c == '\n') ++linea;
+                        if (c == '\n');
                     } while (c != EOF && c != '}');
 
                     if (c == '}') {

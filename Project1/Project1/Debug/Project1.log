@@ -1,0 +1,20 @@
+﻿  lex.yy.c
+lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
+  yacc.tab.c
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(307,24): warning C4273: 'malloc': vinculación de DLL incoherente
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(314,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1407,33): warning C4047: 'función': 'char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1407,27): warning C4024: 'agregarTablaSimbolos': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1412,33): warning C4047: 'función': 'char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1412,27): warning C4024: 'agregarTablaSimbolos': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1417,33): warning C4047: 'función': 'char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1417,27): warning C4024: 'agregarTablaSimbolos': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1656,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1658,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1673,30): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1722,30): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1724,14): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 2 tiene el tipo 'int'
+  Generando código...
+  Project1.vcxproj -> C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\Project1\Debug\Project1.exe

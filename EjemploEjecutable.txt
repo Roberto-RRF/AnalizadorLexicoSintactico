@@ -4,7 +4,7 @@
 }
 LEER x; 
 SI x < 0 VERDADERA 
-  	fact 	= 	1;
+  	fact = 	1;
  	REPETIR
     		fact  =     fact * x;
     		x = x - 1
