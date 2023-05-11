@@ -8,21 +8,23 @@
 #include <malloc.h>
 #include <string.h>
 #define MAX_ID_SIZE 100
+#define TABLE_SIZE 100
+#define MAX_USOS 10
 
-void agregarTablaSimbolos(char *identificador, char metodo, int valor);
-int buscarIndice(char *identificador);
-void imprimirTablaSimbolos();
 
-struct dataType
-{
+void add(char, int, char);
+int hash(char *key);
+
+struct dataType {
    char * identificador;
-   int primeraAparicion;
-   int usos[100];
-   int asignaciones[100];
-} tabla[100];
-int contadorVariables = 0;
-int contUsos[100] = {0};
-int contAsignaciones[100] = {0};
+   int primera;
+   int usos[MAX_USOS];
+   int asignaciones[MAX_USOS];
+   int contUsos;
+   int contAsignaciones;
+} tabla[TABLE_SIZE];
+
+int contadorVariables = -1;
 
 
 extern yyin;
@@ -50,9 +52,9 @@ intruccion_if           : TOKEN_SI expresion TOKEN_VERDADERO secuencia_intruccio
 
 intruccion_repeat       : TOKEN_REPETIR secuencia_intrucciones TOKEN_HASTA expresion
 
-intruccion_asignacion   : TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno); } TOKEN_ASIGNACION expresion
+intruccion_asignacion   : TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'A'); } TOKEN_ASIGNACION expresion
 
-intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno); }
+intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'A'); }
 
 intruccion_write        : TOKEN_ESCRIBIR expresion
 
@@ -74,7 +76,7 @@ termino                 : termino TOKEN_MULT factor
 
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                         | TOKEN_DIGITO
-                        | TOKEN_IDENTIFICADOR {agregarTablaSimbolos(yytext, 'A',yylineno);}
+                        | TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'U'); }
 						| TOKEN_CADENA 
 
 
@@ -93,6 +95,7 @@ int yyerror(char *s) {
     printf("Error:  %s", mensaje);
 
 
+
     return 0;
  }
 
@@ -108,69 +111,95 @@ int main(int argc, char * argv[])
             yyin = stdin;
 
       
+
+
+
+      
             
             
     	yyparse();
-      printf("Programa reconocido");
+      printf("Programa reconocido \n");
+      
+      for(unsigned int i = 0; i <TABLE_SIZE ; i++)
+      {
+         if(tabla[i].identificador)
+         {
+            printf("%s %d\n", tabla[i].identificador, tabla[i].primera);
+            printf("Usos ----------- \n");
+            for(unsigned j = 0; j < MAX_USOS; j++)
+            {
+               if(tabla[i].usos[j])
+                  printf("%d \n", tabla[i].usos[j]);
+            }
+
+            printf("Asignaciones ----------- \n");
+            for(unsigned j = 0; j < MAX_USOS; j++)
+            {
+               if(tabla[i].asignaciones[j])
+                  printf("%d \n", tabla[i].asignaciones[j]);
+            }
+         }
+            
+      }
+
+
+
+
     	return 0;
 }
 
-int buscarIndice(char *identificador)
+
+
+void add(char *identificador, int linea, char caso)
 {
-   if(contadorVariables == 0)
-      return 0;
-   
-   for(unsigned int i = 0; i < contadorVariables; i++)
-      if(tabla[i].identificador == identificador)
-         return i;
-
-   return -1;
-}
-
-
-void agregarTablaSimbolos(char *identificador, char metodo, int valor)
-{
-   
-   int indice = buscarIndice(identificador);
-   if(indice == 0) // Agregamos la variable porque no esta 
+   int indice = hash(identificador);
+   if(!tabla[indice].identificador)
    {
-      tabla[contadorVariables].identificador = strdup(identificador);
-      printf("%s", tabla[contadorVariables].identificador);
-      tabla[contadorVariables].primeraAparicion = valor;
-      if(metodo == 'U')
+      tabla[indice].identificador = identificador;
+      tabla[indice].primera = linea;
+      tabla[indice].contUsos = 0;
+      tabla[indice].contAsignaciones = 0;
+      if(caso=='U')
       {
-         tabla[contadorVariables].usos[0] = valor;
-         contUsos[contadorVariables]++;
+         
+         tabla[indice].usos[0] = linea;
+         tabla[indice].contUsos++;
       }
-      if(metodo == 'A')
+      if(caso=='A')
       {
-         tabla[contadorVariables].asignaciones[0] = valor;
-         contAsignaciones[contadorVariables]++;
+         
+         tabla[indice].asignaciones[0] = linea;
+         tabla[indice].contAsignaciones++;
       }
-      contadorVariables++;
-      return;
+      
    }
    else
    {
-      if(metodo == 'U')
+      if(caso=='U')
       {
-         tabla[contadorVariables].usos[contUsos[contadorVariables]] = valor;
-         contUsos[contadorVariables]++;
+         tabla[indice].usos[tabla[indice].contUsos] = linea;
+         tabla[indice].contUsos++;
       }
-      if(metodo == 'A')
+
+      if(caso=='U')
       {
-         tabla[contadorVariables].asignaciones[contAsignaciones[contadorVariables]] = valor;
-         contAsignaciones[contadorVariables]++;
+         tabla[indice].usos[tabla[indice].contAsignaciones] = linea;
+         tabla[indice].contAsignaciones++;
       }
-      return;
    }
+      
+   
 }
 
-void imprimirTablaSimbolos()
+int hash(char *key)
 {
-   printf("Variable \t Primera Aparicion \t Se Utiliza \t Se Asigna \n");
-   for(unsigned int i = 0; i < contadorVariables; i++)
-   {
-      printf("%s\t %s \n", tabla[i].identificador, tabla[i].primeraAparicion);
-   }
+    size_t size = strlen(key);
+    long sum = 0;
+    long mul = 1;
+    for (size_t i = 0; i < size; i++)
+    {
+        mul = (i % 4 == 0) ? 1 : mul << 8;
+        sum = sum + key[i] * mul;
+    }
+    return (int)(sum % TABLE_SIZE);
 }

@@ -441,7 +441,7 @@ char *yytext;
 
     #pragma warning(disable: 4996 6011 6385 4013)
 
-
+int num_lineas = -1;
    
 #line 447 "lex.yy.c"
 
