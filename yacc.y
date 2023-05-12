@@ -5,20 +5,81 @@
 #define MAX_ID_SIZE 100
 #define TABLE_SIZE 100
 #define MAX_USOS 10
+#define MAXHIJOS 
 
 
 
 void add(char, int, char);
 int hash(char *key);
+extern int numerodeLinea
 
-struct dataType {
-   char * identificador;
-   int primera;
-   int usos[MAX_USOS];
-   int asignaciones[MAX_USOS];
-   int contUsos;
-   int contAsignaciones;
-} tabla[TABLE_SIZE];
+typedef int TipoToken;
+typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
+typedef enum {TipoIF, TipoREPEAT, TipoASIGNACION, TipoREAD, TipoWRITE} InstruccionesTipo;
+typedef enum {TipoOPERADOR, TipoConstante, TipoIDENTIFICADOR} ExpresionesTipo;
+
+typedef enum {Void, Integer, Boolean} TiposdeExpresionesyNodosdelLenguaje;
+
+tydef struct NodoArbol
+{
+   NodoArbol * hijos[MAXHIJOS];
+   NodoArbol * hermano;
+   int numerodeLinea;
+   NodoTipo tipodelnodo;
+   union
+   {
+      InstruccionesTipo instruccion;
+      ExpresionesTipo expresion;
+   } tipo;
+   union 
+   {
+      TipoToken operador;
+      int valor;
+      char * nombre;
+   } atributos;
+   TiposdeExpresionesyNodosdelLenguaje TipoLenguajedelNodo;
+   
+   
+
+}
+
+NodoArbol * NuevoNodoInstruccion(InstruccionesTipo tipodelNodo)
+{
+   NodoArbol * t=(NodoArbol *)malloc(sizeof(NodoArbol))
+   int i;
+   if (t==NULL)
+      fprintf(salidas, "Memoria agotada al compilar la linea %d\n", numerodeLinea);
+
+   else
+   {
+      for (i=0;i<MAXHIJOS;i++)
+         t->hijos[i]=NULL;
+      t->hermano=NULL;
+      t->tipodelnodo=TipoInstruccion;
+      t->tipo.instruccion=tipodelnodo;
+      t->numerodeLinea=numerodeLinea;
+   }
+   return t;
+}
+
+NodoArbol * NuevoNodoExpresion(ExpresionesTipo tipodelNodo)
+{
+   NodoArbol * t=(NodoArbol *)malloc(sizeof(NodoArbol))
+   int i;
+   if (t==NULL)
+      fprintf(salidas, "Memoria agotada al compilar la linea %d\n", numerodeLinea);
+
+   else
+   {
+      for (i=0;i<MAXHIJOS;i++)
+         t->hijos[i]=NULL;
+      t->hermano=NULL;
+      t->tipodelnodo=TipoExpresion
+      t->tipo.expresion=tipodelnodo;
+      t->numerodeLinea=numerodeLinea;
+   }
+   return t;
+}
 
 int contadorVariables = -1;
 
