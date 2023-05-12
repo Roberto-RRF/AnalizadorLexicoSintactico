@@ -1,8 +1,3 @@
-%token TOKEN_SI TOKEN_VERDADERO TOKEN_FALSO TOKEN_FIN_SI TOKEN_REPETIR TOKEN_HASTA TOKEN_LEER TOKEN_ESCRIBIR TOKEN_DIGITO TOKEN_IDENTIFICADOR TOKEN_CADENA TOKEN_PUNTO_COMA TOKEN_PARENTESIS_IZQUIERDO TOKEN_PARENTESIS_DERECHO
-%token TOKEN_DIFERENTE TOKEN_IGUAL TOKEN_MENOR_IGUAL TOKEN_MAYOR_IGUAL TOKEN_MENOR_QUE TOKEN_MAYOR_QUE TOKEN_ASIGNACION
-%token TOKEN_SUMA TOKEN_RESTA 
-%token TOKEN_MULT TOKEN_DIV
-
 %{
 #include <stdio.h>
 #include <malloc.h>
@@ -10,6 +5,7 @@
 #define MAX_ID_SIZE 100
 #define TABLE_SIZE 100
 #define MAX_USOS 10
+
 
 
 void add(char, int, char);
@@ -32,8 +28,35 @@ extern yytext;
 extern yylineno;
 
 #pragma warning(disable: 4013 6385 6001 4996)
+
+
+
 %}
+
+
+
+
+
+
+
+%union {
+   char* chain;
+}
+
+%token <chain> TOKEN_SI TOKEN_VERDADERO TOKEN_FALSO TOKEN_FIN_SI TOKEN_REPETIR TOKEN_HASTA TOKEN_LEER TOKEN_ESCRIBIR TOKEN_DIGITO TOKEN_IDENTIFICADOR TOKEN_CADENA TOKEN_PUNTO_COMA TOKEN_PARENTESIS_IZQUIERDO TOKEN_PARENTESIS_DERECHO
+%token <chain> TOKEN_DIFERENTE TOKEN_IGUAL TOKEN_MENOR_IGUAL TOKEN_MAYOR_IGUAL TOKEN_MENOR_QUE TOKEN_MAYOR_QUE TOKEN_ASIGNACION
+%token <chain> TOKEN_SUMA TOKEN_RESTA 
+%token <chain> TOKEN_MULT TOKEN_DIV
+
+
+
+
+
+
+
 %%
+
+
 
 programa                : secuencia_intrucciones
 
@@ -52,9 +75,9 @@ intruccion_if           : TOKEN_SI expresion TOKEN_VERDADERO secuencia_intruccio
 
 intruccion_repeat       : TOKEN_REPETIR secuencia_intrucciones TOKEN_HASTA expresion
 
-intruccion_asignacion   : TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'A'); } TOKEN_ASIGNACION expresion
+intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion  {add(strdup($1), yylineno, 'A');}
 
-intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'A'); }
+intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR {add(strdup($2), yylineno, 'A');}
 
 intruccion_write        : TOKEN_ESCRIBIR expresion
 
@@ -76,10 +99,10 @@ termino                 : termino TOKEN_MULT factor
 
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                         | TOKEN_DIGITO
-                        | TOKEN_IDENTIFICADOR { add(strdup(yytext), yylineno, 'U'); }
+                        | TOKEN_IDENTIFICADOR  {add(strdup($1), yylineno, 'U');}
 						| TOKEN_CADENA 
 
-
+ 
 
 %%
 
@@ -103,11 +126,11 @@ int yyerror(char *s) {
 
 int main(int argc, char * argv[])
 {
-    	++argv;
-    	--argc;  
-    	if (argc > 0)
+      ++argv;
+      --argc;  
+      if (argc > 0)
             yyin = fopen( argv[0], "r" );
-    	else
+      else
             yyin = stdin;
 
       
@@ -119,6 +142,8 @@ int main(int argc, char * argv[])
             
     	yyparse();
 
+
+      // Imprimimos el arbol sintactico
       printf("Tabla de simbolos \n");      
       printf("Identificador \t Primera \t Usos \t\t Asignaciones \n");
       for(unsigned int i = 0; i <TABLE_SIZE ; i++)

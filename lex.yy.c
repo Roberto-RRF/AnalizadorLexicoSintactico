@@ -290,18 +290,18 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 30
 static yyconst short int yy_acclist[103] =
     {   0,
-       30,   29,   26,   29,   25,   29,   29,   29,   19,   29,
-       20,   29,   12,   29,   10,   29,   11,   29,   13,   29,
-       24,   29,   18,   29,   21,   29,   23,   29,   22,   29,
-        9,   29,    9,   29,    9,   29,    9,   29,    9,   29,
-        9,   29,    9,   29,    9,   29,   28,   29,   26,   15,
-       27,   24,   16,   14,   17,    9,    9,    9,    9,    9,
-        9,    9,    1,    9,    9,    9,    9,    9,    9,    9,
-        9,    9,    9,    9,    9,    9,    7,    9,    9,    9,
-        9,    3,    9,    9,    6,    9,    9,    9,    9,    4,
-        9,    9,    9,    9,    5,    9,    9,    8,    9,    9,
+       30,   29,   26,   29,   25,   29,   29,   29,   18,   29,
+       19,   29,   11,   29,    9,   29,   10,   29,   12,   29,
+       24,   29,   17,   29,   20,   29,   22,   29,   21,   29,
+       23,   29,   23,   29,   23,   29,   23,   29,   23,   29,
+       23,   29,   23,   29,   23,   29,   28,   29,   26,   14,
+       27,   24,   15,   13,   16,   23,   23,   23,   23,   23,
+       23,   23,    1,   23,   23,   23,   23,   23,   23,   23,
+       23,   23,   23,   23,   23,   23,    7,   23,   23,   23,
+       23,    3,   23,   23,    6,   23,   23,   23,   23,    4,
+       23,   23,   23,   23,    5,   23,   23,    8,   23,   23,
 
-        2,    9
+        2,   23
     } ;
 
 static yyconst short int yy_accept[78] =
@@ -441,7 +441,7 @@ char *yytext;
 
     #pragma warning(disable: 4996 6011 6385 4013)
 
-int num_lineas = -1;
+
    
 #line 447 "lex.yy.c"
 
@@ -692,141 +692,150 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 24 "flex.lex"
-{return TOKEN_SI;}
+{yylval.chain = strdup(yytext); return TOKEN_SI;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 25 "flex.lex"
-{return TOKEN_VERDADERO;}
+{yylval.chain = strdup(yytext); return TOKEN_VERDADERO;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 26 "flex.lex"
-{return TOKEN_FALSO;}
+{yylval.chain = strdup(yytext); return TOKEN_FALSO;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 27 "flex.lex"
-{return TOKEN_FIN_SI;}
+{yylval.chain = strdup(yytext); return TOKEN_FIN_SI;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 28 "flex.lex"
-{return TOKEN_REPETIR;} 
+{yylval.chain = strdup(yytext); return TOKEN_REPETIR;} 
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 29 "flex.lex"
-{return TOKEN_HASTA;}
+{yylval.chain = strdup(yytext); return TOKEN_HASTA;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 30 "flex.lex"
-{return TOKEN_LEER;}
+{yylval.chain = strdup(yytext); return TOKEN_LEER;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 31 "flex.lex"
-{return TOKEN_ESCRIBIR;}
+{yylval.chain = strdup(yytext); return TOKEN_ESCRIBIR;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 32 "flex.lex"
-{return TOKEN_IDENTIFICADOR;}
+{yylval.chain = strdup(yytext); return TOKEN_SUMA;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 33 "flex.lex"
-{return TOKEN_SUMA;}
+{yylval.chain = strdup(yytext); return TOKEN_RESTA;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 34 "flex.lex"
-{return TOKEN_RESTA;}
+{yylval.chain = strdup(yytext); return TOKEN_MULT;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 35 "flex.lex"
-{return TOKEN_MULT;}
+{yylval.chain = strdup(yytext); return TOKEN_DIV;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 36 "flex.lex"
-{return TOKEN_DIV;}
+{yylval.chain = strdup(yytext); return TOKEN_IGUAL;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 37 "flex.lex"
-{return TOKEN_IGUAL;}
+{yylval.chain = strdup(yytext); return TOKEN_DIFERENTE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 38 "flex.lex"
-{return TOKEN_DIFERENTE;}
+{yylval.chain = strdup(yytext); return TOKEN_MENOR_IGUAL;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 39 "flex.lex"
-{return TOKEN_MENOR_IGUAL;}
+{yylval.chain = strdup(yytext); return TOKEN_MAYOR_IGUAL;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 40 "flex.lex"
-{return TOKEN_MAYOR_IGUAL;}
+{yylval.chain = strdup(yytext); return TOKEN_PUNTO_COMA;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 41 "flex.lex"
-{return TOKEN_PUNTO_COMA;}
+{yylval.chain = strdup(yytext); return TOKEN_PARENTESIS_IZQUIERDO;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 42 "flex.lex"
-{return TOKEN_PARENTESIS_IZQUIERDO;}
+{yylval.chain = strdup(yytext); return TOKEN_PARENTESIS_DERECHO;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 43 "flex.lex"
-{return TOKEN_PARENTESIS_DERECHO;}
+{yylval.chain = strdup(yytext); return TOKEN_MENOR_QUE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 44 "flex.lex"
-{return TOKEN_MENOR_QUE;}
+{yylval.chain = strdup(yytext); return TOKEN_MAYOR_QUE;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 45 "flex.lex"
-{return TOKEN_MAYOR_QUE;}
+{yylval.chain = strdup(yytext); return TOKEN_ASIGNACION;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 46 "flex.lex"
-{return TOKEN_ASIGNACION;}
+#line 47 "flex.lex"
+{
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_IDENTIFICADOR;
+                 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 47 "flex.lex"
-{return TOKEN_DIGITO;}
+#line 51 "flex.lex"
+{
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_DIGITO;
+                 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 48 "flex.lex"
+#line 55 "flex.lex"
 ; /* ignorar saltos de linea */
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 49 "flex.lex"
+#line 56 "flex.lex"
 ; /* ignorar espacios en blanco */
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 50 "flex.lex"
-{return TOKEN_CADENA;}
+#line 57 "flex.lex"
+{
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_CADENA;
+                 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 53 "flex.lex"
+#line 63 "flex.lex"
 {   
                     int c;
                     do {
@@ -846,10 +855,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 72 "flex.lex"
+#line 82 "flex.lex"
 ECHO;
 	YY_BREAK
-#line 853 "lex.yy.c"
+#line 862 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1733,7 +1742,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 72 "flex.lex"
+#line 82 "flex.lex"
 
 
 int yywrap(void) {

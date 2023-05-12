@@ -21,33 +21,43 @@ SALTO   [\n]
 %%
 
 
-"SI"             {return TOKEN_SI;}
-"VERDADERA"      {return TOKEN_VERDADERO;}
-"FALSA"          {return TOKEN_FALSO;}
-"FIN_SI" 		 {return TOKEN_FIN_SI;}
-"REPETIR"        {return TOKEN_REPETIR;} 
-"HASTA"          {return TOKEN_HASTA;}
-"LEER"           {return TOKEN_LEER;}
-"ESCRIBIR"       {return TOKEN_ESCRIBIR;}
-{ID}	         {return TOKEN_IDENTIFICADOR;}
-\+  	         {return TOKEN_SUMA;}
-\-			     {return TOKEN_RESTA;}
-\* 			     {return TOKEN_MULT;}
-\/ 			     {return TOKEN_DIV;}
-\=\= 			 {return TOKEN_IGUAL;}
-\!\= 			 {return TOKEN_DIFERENTE;}
-\<\= 			 {return TOKEN_MENOR_IGUAL;}
-\>\= 			 {return TOKEN_MAYOR_IGUAL;}
-\;			     {return TOKEN_PUNTO_COMA;}
-\(			     {return TOKEN_PARENTESIS_IZQUIERDO;}
-\) 			     {return TOKEN_PARENTESIS_DERECHO;}
-\< 			     {return TOKEN_MENOR_QUE;}
-\> 			     {return TOKEN_MAYOR_QUE;}
-\=     		     {return TOKEN_ASIGNACION;}
-{DIGITO}         {return TOKEN_DIGITO;}
+"SI"             {yylval.chain = strdup(yytext); return TOKEN_SI;}
+"VERDADERA"      {yylval.chain = strdup(yytext); return TOKEN_VERDADERO;}
+"FALSA"          {yylval.chain = strdup(yytext); return TOKEN_FALSO;}
+"FIN_SI" 		 {yylval.chain = strdup(yytext); return TOKEN_FIN_SI;}
+"REPETIR"        {yylval.chain = strdup(yytext); return TOKEN_REPETIR;} 
+"HASTA"          {yylval.chain = strdup(yytext); return TOKEN_HASTA;}
+"LEER"           {yylval.chain = strdup(yytext); return TOKEN_LEER;}
+"ESCRIBIR"       {yylval.chain = strdup(yytext); return TOKEN_ESCRIBIR;}
+\+  	         {yylval.chain = strdup(yytext); return TOKEN_SUMA;}
+\-			     {yylval.chain = strdup(yytext); return TOKEN_RESTA;}
+\* 			     {yylval.chain = strdup(yytext); return TOKEN_MULT;}
+\/ 			     {yylval.chain = strdup(yytext); return TOKEN_DIV;}
+\=\= 			 {yylval.chain = strdup(yytext); return TOKEN_IGUAL;}
+\!\= 			 {yylval.chain = strdup(yytext); return TOKEN_DIFERENTE;}
+\<\= 			 {yylval.chain = strdup(yytext); return TOKEN_MENOR_IGUAL;}
+\>\= 			 {yylval.chain = strdup(yytext); return TOKEN_MAYOR_IGUAL;}
+\;			     {yylval.chain = strdup(yytext); return TOKEN_PUNTO_COMA;}
+\(			     {yylval.chain = strdup(yytext); return TOKEN_PARENTESIS_IZQUIERDO;}
+\) 			     {yylval.chain = strdup(yytext); return TOKEN_PARENTESIS_DERECHO;}
+\< 			     {yylval.chain = strdup(yytext); return TOKEN_MENOR_QUE;}
+\> 			     {yylval.chain = strdup(yytext); return TOKEN_MAYOR_QUE;}
+\=     		     {yylval.chain = strdup(yytext); return TOKEN_ASIGNACION;}
+
+{ID}	         {
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_IDENTIFICADOR;
+                 }
+{DIGITO}         {
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_DIGITO;
+                 }
 {SALTO}			 ; /* ignorar saltos de linea */
 {ESPACIO}        ; /* ignorar espacios en blanco */
-{CADENA}		 {return TOKEN_CADENA;}
+{CADENA}		 {
+                    yylval.chain = strdup(yytext);
+                    return TOKEN_CADENA;
+                 }
 
 
 "{"             {   
