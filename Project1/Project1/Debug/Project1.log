@@ -1,24 +1,26 @@
 ﻿  lex.yy.c
 lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
   yacc.tab.c
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(309,24): warning C4273: 'malloc': vinculación de DLL incoherente
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(309,24): warning C4273: 'malloc': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(316,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(316,19): warning C4273: 'free': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1409,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1409,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1409,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1409,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1414,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1414,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1414,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1414,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1419,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1419,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1419,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1419,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1659,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1661,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1703,16): warning C4028: parámetro formal 1 distinto de la declaración
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1409,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1409,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1409,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1409,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1414,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1414,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1414,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1414,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1419,24): warning C4047: 'función': 'const char *' es distinto en los niveles de direccionamiento indirecto de 'int'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1419,18): warning C4024: 'strdup': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1419,25): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1419,17): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1659,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1661,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1679,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1685,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1702,16): warning C4028: parámetro formal 1 distinto de la declaración
   Generando código...
-  Project1.vcxproj -> C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\Project1\Debug\Project1.exe

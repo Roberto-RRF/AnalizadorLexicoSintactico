@@ -1668,28 +1668,27 @@ int main(int argc, char * argv[])
             
             
     	yyparse();
-      printf("Programa reconocido \n");
-      
+
+      printf("Tabla de simbolos \n");      
+      printf("Identificador \t Primera \t Usos \t\t Asignaciones \n");
       for(unsigned int i = 0; i <TABLE_SIZE ; i++)
       {
          if(tabla[i].identificador)
          {
-            printf("%s %d\n", tabla[i].identificador, tabla[i].primera);
-            printf("Usos ----------- \n");
-            for(unsigned j = 0; j < MAX_USOS; j++)
+            printf("%s \t\t %d \t\t", tabla[i].identificador, tabla[i].primera);
+            for(unsigned int j = 0; j < tabla[i].contUsos; j++)
             {
                if(tabla[i].usos[j])
-                  printf("%d \n", tabla[i].usos[j]);
+                  printf("%d, ", tabla[i].usos[j]);
             }
-
-            printf("Asignaciones ----------- \n");
-            for(unsigned j = 0; j < MAX_USOS; j++)
+            printf("\t\t\t");
+            for(unsigned int j = 0; j < tabla[i].contAsignaciones; j++)
             {
                if(tabla[i].asignaciones[j])
-                  printf("%d \n", tabla[i].asignaciones[j]);
+                  printf("%d, ", tabla[i].asignaciones[j]);
             }
+         printf("\n");
          }
-            
       }
 
 
