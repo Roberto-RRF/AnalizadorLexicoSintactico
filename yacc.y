@@ -5,12 +5,13 @@
 #define MAX_ID_SIZE 100
 #define TABLE_SIZE 100
 #define MAX_USOS 10
-#define MAXHIJOS 
+#define MAXHIJOS 3
 
 
 
 void add(char, int, char);
 int hash(char *key);
+struct nodo *crearNodo();
 
 typedef int TipoToken;
 typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
@@ -28,8 +29,20 @@ struct dataType {
 } tabla[TABLE_SIZE];
 
 
+struct nodo{
+   struct nodo *hermano;
+   struct node *hijos[MAXHIJOS];
+   char *valor;
+   enum NodoTipo tipo;
+   union{
+      enum InstruccionesTipo tipoInstruccion;
+      enum ExpresionesTipo tipoExpresion;
+   };
+};
+
 
 int contadorVariables = -1;
+struct nodo *root;
 
 
 extern yyin;
@@ -50,12 +63,15 @@ extern yylineno;
 
 %union {
    char* chain;
+   struct nodo *nodo;
 }
 
 %token <chain> TOKEN_SI TOKEN_VERDADERO TOKEN_FALSO TOKEN_FIN_SI TOKEN_REPETIR TOKEN_HASTA TOKEN_LEER TOKEN_ESCRIBIR TOKEN_DIGITO TOKEN_IDENTIFICADOR TOKEN_CADENA TOKEN_PUNTO_COMA TOKEN_PARENTESIS_IZQUIERDO TOKEN_PARENTESIS_DERECHO
 %token <chain> TOKEN_DIFERENTE TOKEN_IGUAL TOKEN_MENOR_IGUAL TOKEN_MAYOR_IGUAL TOKEN_MENOR_QUE TOKEN_MAYOR_QUE TOKEN_ASIGNACION
 %token <chain> TOKEN_SUMA TOKEN_RESTA 
 %token <chain> TOKEN_MULT TOKEN_DIV
+
+%type <nodo> programa secuencia_intrucciones intruccion intruccion_if intruccion_repeat intruccion_asignacion intruccion_read intruccion_write expresion expresion_simple termino factor
 
 
 
@@ -68,6 +84,11 @@ extern yylineno;
 
 
 programa                : secuencia_intrucciones
+                        {
+                           root = crearNodo();
+                           root->valor = "Inicio del programa";
+                           $$ = root;
+                        }
 
 secuencia_intrucciones  : secuencia_intrucciones TOKEN_PUNTO_COMA intruccion
                         | intruccion
@@ -175,6 +196,14 @@ int main(int argc, char * argv[])
          }
       }
 
+      printf("\n\n\n\n\n");
+      printf("Arbol sintactico \n");
+      while(root)
+      {
+         printf("%s \n", root->valor);
+         root = root->hermano;
+      }
+
 
 
 
@@ -235,4 +264,17 @@ int hash(char *key)
         sum = sum + key[i] * mul;
     }
     return (int)(sum % TABLE_SIZE);
+}
+
+
+// Funcion que crea un nodo vacio 
+struct nodo *crearNodo()
+{
+   struct nodo *nuevoNodo = (struct nodo *)malloc(sizeof(struct nodo));
+   nuevoNodo->valor = NULL;
+   nuevoNodo->tipo = 0;
+   nuevoNodo->hermano = NULL;
+   for(int i = 0; i < MAXHIJOS; i++)
+      nuevoNodo->hijos[i] = NULL;
+   return nuevoNodo;
 }

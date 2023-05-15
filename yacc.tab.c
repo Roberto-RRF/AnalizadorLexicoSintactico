@@ -74,12 +74,13 @@
 #define MAX_ID_SIZE 100
 #define TABLE_SIZE 100
 #define MAX_USOS 10
-#define MAXHIJOS 
+#define MAXHIJOS 3
 
 
 
 void add(char, int, char);
 int hash(char *key);
+struct nodo *crearNodo();
 
 typedef int TipoToken;
 typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
@@ -97,8 +98,20 @@ struct dataType {
 } tabla[TABLE_SIZE];
 
 
+struct nodo{
+   struct nodo *hermano;
+   struct node *hijos[MAXHIJOS];
+   char *valor;
+   enum NodoTipo tipo;
+   union{
+      enum InstruccionesTipo tipoInstruccion;
+      enum ExpresionesTipo tipoExpresion;
+   };
+};
+
 
 int contadorVariables = -1;
+struct nodo *root;
 
 
 extern yyin;
@@ -173,6 +186,7 @@ typedef union YYSTYPE
 
 
    char* chain;
+   struct nodo *nodo;
 
 
 
@@ -482,10 +496,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    70,    70,    72,    73,    75,    76,    77,    78,    79,
-      80,    82,    83,    85,    87,    89,    91,    93,    94,    95,
-      96,    97,    98,    99,   101,   102,   103,   105,   106,   107,
-     109,   110,   111,   112
+       0,    86,    86,    93,    94,    96,    97,    98,    99,   100,
+     101,   103,   104,   106,   108,   121,   123,   125,   126,   127,
+     128,   129,   130,   131,   133,   134,   135,   137,   138,   139,
+     141,   142,   143,   144
 };
 #endif
 
@@ -1425,9 +1439,28 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 14:
+        case 2:
 
-    {add(strdup((yyvsp[(1) - (3)].chain)), yylineno, 'A');;}
+    {
+                           root = crearNodo();
+                           root->valor = "Inicio del programa";
+                           (yyval.nodo) = root;
+                        ;}
+    break;
+
+  case 14:
+
+    {
+                           add(strdup((yyvsp[(1) - (3)].chain)), yylineno, 'A'); // Agregamos a la tabla de simbolos
+                           struct nodo temp = crearNodo();
+                           temp->valor = (yyvsp[(1) - (3)].chain);
+                           temp->tipo = TipoExpresion;
+                           temp->tipoExpresion = TipoIDENTIFICADOR;
+                           (yyval.nodo) = temp;
+
+                        
+                        
+                        ;}
     break;
 
   case 15:
@@ -1714,6 +1747,14 @@ int main(int argc, char * argv[])
          }
       }
 
+      printf("\n\n\n\n\n");
+      printf("Arbol sintactico \n");
+      while(root)
+      {
+         printf("%s \n", root->valor);
+         root = root->hermano;
+      }
+
 
 
 
@@ -1775,3 +1816,17 @@ int hash(char *key)
     }
     return (int)(sum % TABLE_SIZE);
 }
+
+
+// Funcion que crea un nodo vacio 
+struct nodo *crearNodo()
+{
+   struct nodo *nuevoNodo = (struct nodo *)malloc(sizeof(struct nodo));
+   nuevoNodo->valor = NULL;
+   nuevoNodo->tipo = 0;
+   nuevoNodo->hermano = NULL;
+   for(int i = 0; i < MAXHIJOS; i++)
+      nuevoNodo->hijos[i] = NULL;
+   return nuevoNodo;
+}
+

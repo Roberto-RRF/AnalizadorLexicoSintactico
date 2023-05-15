@@ -1,21 +1,24 @@
 ﻿  lex.yy.c
 lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
   yacc.tab.c
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(330,24): warning C4273: 'malloc': vinculación de DLL incoherente
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(344,24): warning C4273: 'malloc': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(337,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(351,19): warning C4273: 'free': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1430,42): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1430,16): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1435,42): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1435,16): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1440,42): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1440,16): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1680,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1682,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1702,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1708,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1725,16): warning C4028: parámetro formal 1 distinto de la declaración
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1454,64): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1454,38): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1456,34): error C2232: '->valor': el operando izquierdo tiene el tipo 'struct'; utilice '.'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1457,34): error C2232: '->tipo': el operando izquierdo tiene el tipo 'struct'; utilice '.'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1458,34): error C2232: '->tipoExpresion': el operando izquierdo tiene el tipo 'struct'; utilice '.'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1459,47): error C2440: '=': no se puede realizar la conversión de 'nodo' a 'nodo *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1468,42): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1468,16): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1473,42): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1473,16): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1455,1): error C2440: 'inicializando': no se puede realizar la conversión de 'nodo *' a 'nodo'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1713,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1715,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1735,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1741,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\yacc.tab.c(1766,16): warning C4028: parámetro formal 1 distinto de la declaración
   Generando código...
-  LINK : no se encontró C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\Project1\Debug\Project1.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
-  Project1.vcxproj -> C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\Project1\Debug\Project1.exe
