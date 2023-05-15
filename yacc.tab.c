@@ -74,11 +74,18 @@
 #define MAX_ID_SIZE 100
 #define TABLE_SIZE 100
 #define MAX_USOS 10
+#define MAXHIJOS 
 
 
 
 void add(char, int, char);
 int hash(char *key);
+
+typedef int TipoToken;
+typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
+typedef enum {TipoIF, TipoREPEAT, TipoASIGNACION, TipoREAD, TipoWRITE} InstruccionesTipo;
+typedef enum {TipoOPERADOR, TipoConstante, TipoIDENTIFICADOR} ExpresionesTipo;
+
 
 struct dataType {
    char * identificador;
@@ -88,6 +95,8 @@ struct dataType {
    int contUsos;
    int contAsignaciones;
 } tabla[TABLE_SIZE];
+
+
 
 int contadorVariables = -1;
 
@@ -473,10 +482,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    61,    61,    63,    64,    66,    67,    68,    69,    70,
-      71,    73,    74,    76,    78,    80,    82,    84,    85,    86,
-      87,    88,    89,    90,    92,    93,    94,    96,    97,    98,
-     100,   101,   102,   103
+       0,    70,    70,    72,    73,    75,    76,    77,    78,    79,
+      80,    82,    83,    85,    87,    89,    91,    93,    94,    95,
+      96,    97,    98,    99,   101,   102,   103,   105,   106,   107,
+     109,   110,   111,   112
 };
 #endif
 
