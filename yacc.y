@@ -11,12 +11,14 @@
 
 void add(char, int, char);
 int hash(char *key);
-struct nodo *crearNodo();
+struct nodo *crearNodoInstruccion(InstruccionesTipo);
+struct nodo *crearNodoExpresion(ExpresionesTipo);
+
 
 typedef int TipoToken;
 typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
 typedef enum {TipoIF, TipoREPEAT, TipoASIGNACION, TipoREAD, TipoWRITE} InstruccionesTipo;
-typedef enum {TipoOPERADOR, TipoConstante, TipoIDENTIFICADOR} ExpresionesTipo;
+typedef enum {TipoOPERADOR, TipoCONSTANTE, TipoIDENTIFICADOR} ExpresionesTipo;
 
 
 struct dataType {
@@ -29,15 +31,20 @@ struct dataType {
 } tabla[TABLE_SIZE];
 
 
-struct nodo{
+typedef struct nodo{
    struct nodo *hermano;
    struct node *hijos[MAXHIJOS];
-   char *valor;
-   enum NodoTipo tipo;
+   int numeroLinea;
+   NodoTipo tipoNodo;
    union{
       enum InstruccionesTipo tipoInstruccion;
       enum ExpresionesTipo tipoExpresion;
-   };
+   }tipo;
+   union{
+      TipoToken operador;
+      int valor;
+      char *identificador;
+   } atributos;
 };
 
 
@@ -54,12 +61,6 @@ extern yylineno;
 
 
 %}
-
-
-
-
-
-
 
 %union {
    char* chain;
@@ -79,19 +80,33 @@ extern yylineno;
 
 
 
-%%
+%% 
 
 
 
 programa                : secuencia_intrucciones
                         {
-                           root = crearNodo();
-                           root->valor = "Inicio del programa";
-                           $$ = root;
+                           root = $$;
                         }
 
 secuencia_intrucciones  : secuencia_intrucciones TOKEN_PUNTO_COMA intruccion
+                        {
+                           struct nodo *temp = $1;
+                           if(temp != NULL)
+                           {
+                              while(temp->hermano != NULL)
+                                 temp = temp->hermano;
+                              temp->hermano = $3;
+                           }
+                           else
+                           {
+                              $$=$3;
+                           }
+                        }
                         | intruccion
+                        {
+                           $$ = $1;
+                        }
 
 intruccion              : intruccion_if
                         | intruccion_repeat
@@ -101,58 +116,177 @@ intruccion              : intruccion_if
                         | error /*Erorr por hacer*/
 
 intruccion_if           : TOKEN_SI expresion TOKEN_VERDADERO secuencia_intrucciones TOKEN_FIN_SI
+                           {
+                              $$ = crearNodoInstruccion(TipoIF);
+                              $$->hijos[0] = $2;
+                              $$->hijos[1] = $4;
+                           }
                         | TOKEN_SI expresion TOKEN_VERDADERO secuencia_intrucciones TOKEN_FALSO secuencia_intrucciones TOKEN_FIN_SI
+                           {
+                              $$ = crearNodoInstruccion(TipoIF);
+                              $$->hijos[0] = $2;
+                              $$->hijos[1] = $4;
+                              $$->hijos[2] = $6;
+                           }
 
 intruccion_repeat       : TOKEN_REPETIR secuencia_intrucciones TOKEN_HASTA expresion
+                           {
+                              $$ = crearNodoInstruccion(TipoREPEAT);
+                              $$->hijos[0] = $2;
+                              $$->hijos[1] = $4;
+                           }
 
-intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion  {add(strdup($1), yylineno, 'A');}
+intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion  
+                           {
+                              add(strdup($1), yylineno, 'A'); //Agregamos al arbol sintactico
 
-intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR {add(strdup($2), yylineno, 'A');}
+                              $$ = crearNodoInstruccion(TipoASIGNACION);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                                                         
+                           }
+
+intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR 
+                           {
+                              add(strdup($2), yylineno, 'A'); // Agregamos a la tabla de simbolos
+                              $$ = crearNodoInstruccion(TipoREAD);
+                              $$->hijos[0] = $2;                             
+                           }
 
 intruccion_write        : TOKEN_ESCRIBIR expresion
+                           {
+                              $$ = crearNodoInstruccion(TipoWRITE);
+                              $$->hijos[0] = $2;
+                           }
 
 expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                              printf("Expresion menor que \n");
+                              printf("Hijo 1: %s \n", $$->atributos.valor);
+                              printf("Hijo 2: %d \n", $3->tipo.tipoExpresion);
+                              printf("Operador: %s \n", $2);
+                           }
                         | expresion_simple TOKEN_MAYOR_QUE expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple TOKEN_IGUAL expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple TOKEN_DIFERENTE expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple TOKEN_MENOR_IGUAL expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple TOKEN_MAYOR_IGUAL expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                           }
 
 expresion_simple        : expresion_simple TOKEN_SUMA termino
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | expresion_simple TOKEN_RESTA termino
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | termino
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                           }
 
 termino                 : termino TOKEN_MULT factor
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | termino TOKEN_DIV factor
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                              $$->hijos[1] = $3;
+                              $$->atributos.operador = $2;
+                           }
                         | factor
-
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $1;
+                           }
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
+                           {
+                              $$ = crearNodoExpresion(TipoOPERADOR);
+                              $$->hijos[0] = $2;
+                           }
                         | TOKEN_DIGITO
-                        | TOKEN_IDENTIFICADOR  {add(strdup($1), yylineno, 'U');}
+                           {
+                              $$ = crearNodoExpresion(TipoCONSTANTE);
+                              $$->atributos.valor = atoi($1);
+                           }
+                        | TOKEN_IDENTIFICADOR  
+                           {
+                              add(strdup($1), yylineno, 'U'); // Agregamos a la tabla de simbolos
+
+                              $$ = crearNodoExpresion(TipoIDENTIFICADOR);
+                              $$->atributos.identificador = $1;                           
+                           }
 						| TOKEN_CADENA 
+                          
 
  
 
 %%
+
 
 int yyerror(char *s) {
 
     char mensaje[100];
 
     if ( !strcmp( s, "syntax error" ) )
-       strcpy( mensaje, "Error de sintaxis" );
+      strcpy( mensaje, "Error de sintaxis" );
     else
-       strcpy( mensaje, s );
+      strcpy( mensaje, s );
 
-    printf("Error:  %s", mensaje);
-
-
-
+    printf("Error:  %d", mensaje);
     return 0;
  }
-
-
 
 int main(int argc, char * argv[])
 {
@@ -196,21 +330,22 @@ int main(int argc, char * argv[])
          }
       }
 
-      printf("\n\n\n\n\n");
+      printf("\n\n\n");
       printf("Arbol sintactico \n");
-      while(root)
-      {
-         printf("%s \n", root->valor);
-         root = root->hermano;
-      }
+      
+      // while(root != NULL)
+      // {
+         
+      //    if(root->tipoNodo == TipoExpresion)
+      //       printf("%d \n", root->tipo.tipoExpresion);
+      //    else
+      //       root = root->hijos[0];
+      //       printf("%d \n", root->tipoNodo);
 
-
-
+      // }
 
     	return 0;
 }
-
-
 
 void add(char *identificador, int linea, char caso)
 {
@@ -266,14 +401,25 @@ int hash(char *key)
     return (int)(sum % TABLE_SIZE);
 }
 
-
-// Funcion que crea un nodo vacio 
-struct nodo *crearNodo()
+struct nodo *crearNodoInstruccion(InstruccionesTipo tipo)
 {
    struct nodo *nuevoNodo = (struct nodo *)malloc(sizeof(struct nodo));
-   nuevoNodo->valor = NULL;
-   nuevoNodo->tipo = 0;
+   nuevoNodo->tipoNodo = TipoInstruccion;
+   nuevoNodo->tipo.tipoInstruccion = tipo;
    nuevoNodo->hermano = NULL;
+   nuevoNodo->tipo.tipoInstruccion = tipo;
+   for(int i = 0; i < MAXHIJOS; i++)
+      nuevoNodo->hijos[i] = NULL;
+   return nuevoNodo;
+}
+
+struct nodo *crearNodoExpresion(ExpresionesTipo tipo)
+{
+   struct nodo *nuevoNodo = (struct nodo *)malloc(sizeof(struct nodo));
+   nuevoNodo->tipoNodo = TipoExpresion;
+   nuevoNodo->tipo.tipoExpresion = tipo;
+   nuevoNodo->hermano = NULL;
+   nuevoNodo->tipo.tipoExpresion = tipo;
    for(int i = 0; i < MAXHIJOS; i++)
       nuevoNodo->hijos[i] = NULL;
    return nuevoNodo;
