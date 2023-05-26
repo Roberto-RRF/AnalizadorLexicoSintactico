@@ -1994,22 +1994,6 @@ int main(int argc, char * argv[])
          }
       }
 
-      printf("\n\n\n");
-      printf("Arbol sintactico \n");
-
-      struct nodo *temp = root->hijos[0];
-      printf("HOla: %s \n", temp->atributos.operador);
-      
-      // while(root != NULL)
-      // {
-         
-      //    if(root->tipoNodo == TipoExpresion)
-      //       printf("%d \n", root->tipo.tipoExpresion);
-      //    else
-      //       root = root->hijos[0];
-      //       printf("%d \n", root->tipoNodo);
-
-      // }
 
     	return 0;
 }
