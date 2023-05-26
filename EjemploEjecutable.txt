@@ -14,4 +14,9 @@ SI x < 0 VERDADERA
 FIN_SI
 }
 
-X = 8 + 5
+X = 8 + 5;
+SI X < 7 VERDADERA
+	X = 9
+FALSA
+	Y = 2
+FIN_SI

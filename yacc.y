@@ -13,6 +13,7 @@ void add(char, int, char);
 int hash(char *key);
 struct nodo *crearNodoInstruccion(InstruccionesTipo);
 struct nodo *crearNodoExpresion(ExpresionesTipo);
+void imprimirArbol(struct nodo *, int);
 
 
 typedef int TipoToken;
@@ -145,6 +146,7 @@ intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion
 
                               $$ = crearNodoInstruccion(TipoASIGNACION);
                               $$->atributos.identificador = $1;
+                              $3->atributos.operador = $2;
                               $$->hijos[0] = $3;
                               $$->numeroLinea = yylineno;
 
@@ -214,7 +216,6 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
 
 expresion_simple        : expresion_simple TOKEN_SUMA termino
                            {
-                              //SUMA
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -234,7 +235,6 @@ expresion_simple        : expresion_simple TOKEN_SUMA termino
 
 termino                 : termino TOKEN_MULT factor
                            {
-                              //HOLA
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -335,19 +335,8 @@ int main(int argc, char * argv[])
       printf("\n\n\n");
       printf("Arbol sintactico \n");
 
-      struct nodo *temp = root->hijos[0];
-      printf("HOla: %s \n", temp->atributos.operador);
+      imprimirArbol(root, 0);      
       
-      // while(root != NULL)
-      // {
-         
-      //    if(root->tipoNodo == TipoExpresion)
-      //       printf("%d \n", root->tipo.tipoExpresion);
-      //    else
-      //       root = root->hijos[0];
-      //       printf("%d \n", root->tipoNodo);
-
-      // }
 
     	return 0;
 }
@@ -428,4 +417,65 @@ struct nodo *crearNodoExpresion(ExpresionesTipo tipo)
    for(int i = 0; i < MAXHIJOS; i++)
       nuevoNodo->hijos[i] = NULL;
    return nuevoNodo;
+}
+
+void imprimirArbol(struct nodo *raiz, int nivel) {
+   if (raiz != NULL) {
+      // Imprimir espacios en blanco para representar la profundidad del nodo
+      for (int i = 0; i < nivel; i++) {
+         printf("\t");
+      }
+   
+      
+      // Imprimir información adicional según el tipo de nodo
+      switch (raiz->tipoNodo) {
+         case TipoInstruccion:
+            switch(raiz->tipo.tipoInstruccion) {
+               case TipoASIGNACION:
+                  printf("Identificador %s\n", raiz->atributos.identificador);
+                  break;
+               case TipoIF:
+                  printf("IF\n");
+                  break;
+               case TipoREPEAT:
+                  printf("REPEAT\n");
+                  break;
+               case TipoREAD:
+                  printf("READ\n");
+                  break;
+               case TipoWRITE:
+                  printf("WRITE\n");
+                  break;
+               default:
+                  break;
+            }
+            break;
+         case TipoExpresion:
+            switch(raiz->tipo.tipoExpresion)
+            {
+               case TipoOPERADOR:
+                  printf("Operador: %s\n",raiz->atributos.operador);
+                  break;
+               case TipoCONSTANTE:
+                  printf("%d\n", raiz->atributos.valor);
+                  break;
+               case TipoIDENTIFICADOR:
+                  printf("%s\n", raiz->atributos.identificador);
+                  break;
+               default:
+                  break;
+            }
+         default:
+            break;
+      }
+      
+      // Llamar recursivamente para imprimir los hijos del nodo actual
+      for (int i = 0; i < MAXHIJOS; i++) {
+         struct nodo* hijo = raiz->hijos[i];
+         imprimirArbol(hijo, nivel + 1);
+      }
+
+      // Llamar recursivamente para imprimir los hermanos del nodo actual
+      imprimirArbol(raiz->hermano, nivel);
+   }
 }

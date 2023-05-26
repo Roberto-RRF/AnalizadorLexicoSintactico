@@ -82,6 +82,7 @@ void add(char, int, char);
 int hash(char *key);
 struct nodo *crearNodoInstruccion(InstruccionesTipo);
 struct nodo *crearNodoExpresion(ExpresionesTipo);
+void imprimirArbol(struct nodo *, int);
 
 
 typedef int TipoToken;
@@ -503,9 +504,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    87,    87,    92,   108,   113,   114,   115,   116,   117,
-     118,   120,   126,   134,   141,   154,   161,   167,   174,   181,
-     188,   195,   202,   209,   215,   223,   230,   235,   243,   250,
+       0,    88,    88,    93,   109,   114,   115,   116,   117,   118,
+     119,   121,   127,   135,   142,   156,   163,   169,   176,   183,
+     190,   197,   204,   211,   217,   224,   231,   236,   243,   250,
      254,   259,   264,   271
 };
 #endif
@@ -1545,6 +1546,7 @@ yyreduce:
 
                               (yyval.node) = crearNodoInstruccion(TipoASIGNACION);
                               (yyval.node)->atributos.identificador = (yyvsp[(1) - (3)].chain);
+                              (yyvsp[(3) - (3)].node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                               (yyval.node)->hijos[0] = (yyvsp[(3) - (3)].node);
                               (yyval.node)->numeroLinea = yylineno;
 
@@ -1640,7 +1642,6 @@ yyreduce:
   case 24:
 
     {
-                              //SUMA
                               (yyval.node) = crearNodoExpresion(TipoOPERADOR);
                               (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
                               (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
@@ -1668,7 +1669,6 @@ yyreduce:
   case 27:
 
     {
-                             
                               (yyval.node) = crearNodoExpresion(TipoOPERADOR);
                               (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
                               (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
@@ -1994,6 +1994,11 @@ int main(int argc, char * argv[])
          }
       }
 
+      printf("\n\n\n");
+      printf("Arbol sintactico \n");
+
+      imprimirArbol(root, 0);      
+      
 
     	return 0;
 }
@@ -2074,5 +2079,66 @@ struct nodo *crearNodoExpresion(ExpresionesTipo tipo)
    for(int i = 0; i < MAXHIJOS; i++)
       nuevoNodo->hijos[i] = NULL;
    return nuevoNodo;
+}
+
+void imprimirArbol(struct nodo *raiz, int nivel) {
+   if (raiz != NULL) {
+      // Imprimir espacios en blanco para representar la profundidad del nodo
+      for (int i = 0; i < nivel; i++) {
+         printf("\t");
+      }
+   
+      
+      // Imprimir información adicional según el tipo de nodo
+      switch (raiz->tipoNodo) {
+         case TipoInstruccion:
+            switch(raiz->tipo.tipoInstruccion) {
+               case TipoASIGNACION:
+                  printf("Identificador %s\n", raiz->atributos.identificador);
+                  break;
+               case TipoIF:
+                  printf("IF\n");
+                  break;
+               case TipoREPEAT:
+                  printf("Tipo de instruccion: REPEAT\n");
+                  break;
+               case TipoREAD:
+                  printf("Tipo de instruccion: READ\n");
+                  break;
+               case TipoWRITE:
+                  printf("Tipo de instruccion: WRITE\n");
+                  break;
+               default:
+                  break;
+            }
+            break;
+         case TipoExpresion:
+            switch(raiz->tipo.tipoExpresion)
+            {
+               case TipoOPERADOR:
+                  printf("Operador: %s\n",raiz->atributos.operador);
+                  break;
+               case TipoCONSTANTE:
+                  printf("%d\n", raiz->atributos.valor);
+                  break;
+               case TipoIDENTIFICADOR:
+                  printf("%s\n", raiz->atributos.identificador);
+                  break;
+               default:
+                  break;
+            }
+         default:
+            break;
+      }
+      
+      // Llamar recursivamente para imprimir los hijos del nodo actual
+      for (int i = 0; i < MAXHIJOS; i++) {
+         struct nodo* hijo = raiz->hijos[i];
+         imprimirArbol(hijo, nivel + 1);
+      }
+
+      // Llamar recursivamente para imprimir los hermanos del nodo actual
+      imprimirArbol(raiz->hermano, nivel);
+   }
 }
 
