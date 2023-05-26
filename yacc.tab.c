@@ -102,7 +102,7 @@ struct dataType {
 
 typedef struct nodo{
    struct nodo *hermano;
-   struct node *hijos[MAXHIJOS];
+   struct nodo *hijos[MAXHIJOS];
    int numeroLinea;
    NodoTipo tipoNodo;
    union{
@@ -193,7 +193,7 @@ typedef union YYSTYPE
 
 
    char* chain;
-   struct nodo *nodo;
+   struct nodo *node;
 
 
 
@@ -503,10 +503,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    87,    87,    92,   106,   111,   112,   113,   114,   115,
-     116,   118,   124,   132,   139,   149,   156,   162,   173,   180,
-     187,   194,   201,   208,   214,   221,   228,   234,   241,   248,
-     253,   258,   263,   270
+       0,    87,    87,    92,   108,   113,   114,   115,   116,   117,
+     118,   120,   126,   134,   141,   154,   161,   167,   174,   181,
+     188,   195,   202,   209,   215,   223,   230,   235,   243,   250,
+     254,   259,   264,   271
 };
 #endif
 
@@ -1449,23 +1449,25 @@ yyreduce:
         case 2:
 
     {
-                           root = (yyval.nodo);
+                           root = (yyvsp[(1) - (1)].node);
                         ;}
     break;
 
   case 3:
 
     {
-                           struct nodo *temp = (yyvsp[(1) - (3)].nodo);
+                           struct nodo *temp = (yyvsp[(1) - (3)].node);
                            if(temp != NULL)
                            {
                               while(temp->hermano != NULL)
                                  temp = temp->hermano;
-                              temp->hermano = (yyvsp[(3) - (3)].nodo);
+                              
+                              temp->hermano = (yyvsp[(3) - (3)].node);
+                              (yyval.node) = (yyvsp[(1) - (3)].node);
                            }
                            else
                            {
-                              (yyval.nodo)=(yyvsp[(3) - (3)].nodo);
+                              (yyval.node)=(yyvsp[(3) - (3)].node);
                            }
                         ;}
     break;
@@ -1473,35 +1475,65 @@ yyreduce:
   case 4:
 
     {
-                           (yyval.nodo) = (yyvsp[(1) - (1)].nodo);
+                           (yyval.node) = (yyvsp[(1) - (1)].node);
                         ;}
+    break;
+
+  case 5:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].node);;}
+    break;
+
+  case 6:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].node);;}
+    break;
+
+  case 7:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].node);;}
+    break;
+
+  case 8:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].node);;}
+    break;
+
+  case 9:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].node);;}
+    break;
+
+  case 10:
+
+    {(yyval.node)=NULL;;}
     break;
 
   case 11:
 
     {
-                              (yyval.nodo) = crearNodoInstruccion(TipoIF);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (5)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(4) - (5)].nodo);
+                              (yyval.node) = crearNodoInstruccion(TipoIF);
+                              (yyval.node)->hijos[0] = (yyvsp[(2) - (5)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(4) - (5)].node);
                            ;}
     break;
 
   case 12:
 
     {
-                              (yyval.nodo) = crearNodoInstruccion(TipoIF);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (7)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(4) - (7)].nodo);
-                              (yyval.nodo)->hijos[2] = (yyvsp[(6) - (7)].nodo);
+                              (yyval.node) = crearNodoInstruccion(TipoIF);
+                              (yyval.node)->hijos[0] = (yyvsp[(2) - (7)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(4) - (7)].node);
+                              (yyval.node)->hijos[2] = (yyvsp[(6) - (7)].node);
                            ;}
     break;
 
   case 13:
 
     {
-                              (yyval.nodo) = crearNodoInstruccion(TipoREPEAT);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (4)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(4) - (4)].nodo);
+                              (yyval.node) = crearNodoInstruccion(TipoREPEAT);
+                              (yyval.node)->hijos[0] = (yyvsp[(2) - (4)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(4) - (4)].node);
                            ;}
     break;
 
@@ -1509,10 +1541,13 @@ yyreduce:
 
     {
                               add(strdup((yyvsp[(1) - (3)].chain)), yylineno, 'A'); //Agregamos al arbol sintactico
+                              
 
-                              (yyval.nodo) = crearNodoInstruccion(TipoASIGNACION);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].chain);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
+                              (yyval.node) = crearNodoInstruccion(TipoASIGNACION);
+                              (yyval.node)->atributos.identificador = (yyvsp[(1) - (3)].chain);
+                              (yyval.node)->hijos[0] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->numeroLinea = yylineno;
+
                                                          
                            ;}
     break;
@@ -1521,160 +1556,156 @@ yyreduce:
 
     {
                               add(strdup((yyvsp[(2) - (2)].chain)), yylineno, 'A'); // Agregamos a la tabla de simbolos
-                              (yyval.nodo) = crearNodoInstruccion(TipoREAD);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (2)].chain);                             
+                              (yyval.node) = crearNodoInstruccion(TipoREAD);
+                              (yyval.node)->atributos.identificador = (yyvsp[(2) - (2)].chain);                             
                            ;}
     break;
 
   case 16:
 
     {
-                              (yyval.nodo) = crearNodoInstruccion(TipoWRITE);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (2)].nodo);
+                              (yyval.node) = crearNodoInstruccion(TipoWRITE);
+                              (yyval.node)->hijos[0] = (yyvsp[(2) - (2)].node);
                            ;}
     break;
 
   case 17:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
-                              printf("Expresion menor que \n");
-                              printf("Hijo 1: %s \n", (yyval.nodo)->atributos.valor);
-                              printf("Hijo 2: %d \n", (yyvsp[(3) - (3)].nodo)->tipo.tipoExpresion);
-                              printf("Operador: %s \n", (yyvsp[(2) - (3)].chain));
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 18:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 19:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 20:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 21:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 22:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 23:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (1)].nodo);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (1)].node);
                            ;}
     break;
 
   case 24:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              //SUMA
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 25:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 26:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (1)].nodo);
+                              (yyval.node) = (yyvsp[(1) - (1)].node);
                            ;}
     break;
 
   case 27:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                             
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 28:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (3)].nodo);
-                              (yyval.nodo)->hijos[1] = (yyvsp[(3) - (3)].nodo);
-                              (yyval.nodo)->atributos.operador = (yyvsp[(2) - (3)].chain);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
+                              (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
+                              (yyval.node)->atributos.operador = (yyvsp[(2) - (3)].chain);
                            ;}
     break;
 
   case 29:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(1) - (1)].nodo);
+                              (yyval.node) = (yyvsp[(1) - (1)].node);
                            ;}
     break;
 
   case 30:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.nodo)->hijos[0] = (yyvsp[(2) - (3)].nodo);
+                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
+                              (yyval.node)->hijos[0] = (yyvsp[(2) - (3)].node);
                            ;}
     break;
 
   case 31:
 
     {
-                              (yyval.nodo) = crearNodoExpresion(TipoCONSTANTE);
-                              (yyval.nodo)->atributos.valor = atoi((yyvsp[(1) - (1)].chain));
+                              (yyval.node) = crearNodoExpresion(TipoCONSTANTE);
+                              (yyval.node)->atributos.valor = atoi((yyvsp[(1) - (1)].chain));
                            ;}
     break;
 
@@ -1683,9 +1714,14 @@ yyreduce:
     {
                               add(strdup((yyvsp[(1) - (1)].chain)), yylineno, 'U'); // Agregamos a la tabla de simbolos
 
-                              (yyval.nodo) = crearNodoExpresion(TipoIDENTIFICADOR);
-                              (yyval.nodo)->atributos.identificador = (yyvsp[(1) - (1)].chain);                           
+                              (yyval.node) = crearNodoExpresion(TipoIDENTIFICADOR);
+                              (yyval.node)->atributos.identificador = (yyvsp[(1) - (1)].chain);                           
                            ;}
+    break;
+
+  case 33:
+
+    {(yyval.node)=(yyvsp[(1) - (1)].chain);;}
     break;
 
 
@@ -1960,6 +1996,9 @@ int main(int argc, char * argv[])
 
       printf("\n\n\n");
       printf("Arbol sintactico \n");
+
+      struct nodo *temp = root->hijos[0];
+      printf("HOla: %s \n", temp->atributos.operador);
       
       // while(root != NULL)
       // {

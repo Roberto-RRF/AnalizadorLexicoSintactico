@@ -75,7 +75,7 @@ typedef union YYSTYPE
 
 
    char* chain;
-   struct nodo *nodo;
+   struct nodo *node;
 
 
 

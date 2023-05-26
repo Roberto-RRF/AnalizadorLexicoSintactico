@@ -33,7 +33,7 @@ struct dataType {
 
 typedef struct nodo{
    struct nodo *hermano;
-   struct node *hijos[MAXHIJOS];
+   struct nodo *hijos[MAXHIJOS];
    int numeroLinea;
    NodoTipo tipoNodo;
    union{
@@ -64,7 +64,7 @@ extern yylineno;
 
 %union {
    char* chain;
-   struct nodo *nodo;
+   struct nodo *node;
 }
 
 %token <chain> TOKEN_SI TOKEN_VERDADERO TOKEN_FALSO TOKEN_FIN_SI TOKEN_REPETIR TOKEN_HASTA TOKEN_LEER TOKEN_ESCRIBIR TOKEN_DIGITO TOKEN_IDENTIFICADOR TOKEN_CADENA TOKEN_PUNTO_COMA TOKEN_PARENTESIS_IZQUIERDO TOKEN_PARENTESIS_DERECHO
@@ -72,7 +72,7 @@ extern yylineno;
 %token <chain> TOKEN_SUMA TOKEN_RESTA 
 %token <chain> TOKEN_MULT TOKEN_DIV
 
-%type <nodo> programa secuencia_intrucciones intruccion intruccion_if intruccion_repeat intruccion_asignacion intruccion_read intruccion_write expresion expresion_simple termino factor
+%type <node> programa secuencia_intrucciones intruccion intruccion_if intruccion_repeat intruccion_asignacion intruccion_read intruccion_write expresion expresion_simple termino factor
 
 
 
@@ -86,7 +86,7 @@ extern yylineno;
 
 programa                : secuencia_intrucciones
                         {
-                           root = $$;
+                           root = $1;
                         }
 
 secuencia_intrucciones  : secuencia_intrucciones TOKEN_PUNTO_COMA intruccion
@@ -96,7 +96,9 @@ secuencia_intrucciones  : secuencia_intrucciones TOKEN_PUNTO_COMA intruccion
                            {
                               while(temp->hermano != NULL)
                                  temp = temp->hermano;
+                              
                               temp->hermano = $3;
+                              $$ = $1;
                            }
                            else
                            {
@@ -108,12 +110,12 @@ secuencia_intrucciones  : secuencia_intrucciones TOKEN_PUNTO_COMA intruccion
                            $$ = $1;
                         }
 
-intruccion              : intruccion_if
-                        | intruccion_repeat
-                        | intruccion_asignacion
-                        | intruccion_read
-                        | intruccion_write
-                        | error /*Erorr por hacer*/
+intruccion              : intruccion_if {$$=$1;}
+                        | intruccion_repeat {$$=$1;}
+                        | intruccion_asignacion {$$=$1;}
+                        | intruccion_read {$$=$1;}
+                        | intruccion_write {$$=$1;}
+                        | error {$$=NULL;}
 
 intruccion_if           : TOKEN_SI expresion TOKEN_VERDADERO secuencia_intrucciones TOKEN_FIN_SI
                            {
@@ -139,10 +141,13 @@ intruccion_repeat       : TOKEN_REPETIR secuencia_intrucciones TOKEN_HASTA expre
 intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion  
                            {
                               add(strdup($1), yylineno, 'A'); //Agregamos al arbol sintactico
+                              
 
                               $$ = crearNodoInstruccion(TipoASIGNACION);
-                              $$->hijos[0] = $1;
-                              $$->hijos[1] = $3;
+                              $$->atributos.identificador = $1;
+                              $$->hijos[0] = $3;
+                              $$->numeroLinea = yylineno;
+
                                                          
                            }
 
@@ -150,7 +155,7 @@ intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR
                            {
                               add(strdup($2), yylineno, 'A'); // Agregamos a la tabla de simbolos
                               $$ = crearNodoInstruccion(TipoREAD);
-                              $$->hijos[0] = $2;                             
+                              $$->atributos.identificador = $2;                             
                            }
 
 intruccion_write        : TOKEN_ESCRIBIR expresion
@@ -165,10 +170,6 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
-                              printf("Expresion menor que \n");
-                              printf("Hijo 1: %s \n", $$->atributos.valor);
-                              printf("Hijo 2: %d \n", $3->tipo.tipoExpresion);
-                              printf("Operador: %s \n", $2);
                            }
                         | expresion_simple TOKEN_MAYOR_QUE expresion_simple
                            {
@@ -213,6 +214,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
 
 expresion_simple        : expresion_simple TOKEN_SUMA termino
                            {
+                              //SUMA
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -227,12 +229,12 @@ expresion_simple        : expresion_simple TOKEN_SUMA termino
                            }
                         | termino
                            {
-                              $$ = crearNodoExpresion(TipoOPERADOR);
-                              $$->hijos[0] = $1;
+                              $$ = $1;
                            }
 
 termino                 : termino TOKEN_MULT factor
                            {
+                              //HOLA
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -247,8 +249,7 @@ termino                 : termino TOKEN_MULT factor
                            }
                         | factor
                            {
-                              $$ = crearNodoExpresion(TipoOPERADOR);
-                              $$->hijos[0] = $1;
+                              $$ = $1;
                            }
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                            {
@@ -268,6 +269,7 @@ factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_
                               $$->atributos.identificador = $1;                           
                            }
 						| TOKEN_CADENA 
+                  {$$=$1;}
                           
 
  
@@ -332,6 +334,9 @@ int main(int argc, char * argv[])
 
       printf("\n\n\n");
       printf("Arbol sintactico \n");
+
+      struct nodo *temp = root->hijos[0];
+      printf("HOla: %s \n", temp->atributos.operador);
       
       // while(root != NULL)
       // {

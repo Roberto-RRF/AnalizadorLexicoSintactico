@@ -1,7 +1,7 @@
 { 
  	Ejemplo de un comentario para el Lenguaje a compilar 
  	Universidad Panamericana 2020
-}
+
 LEER x; 
 SI x < 0 VERDADERA 
   	fact = 	1;
@@ -12,3 +12,6 @@ SI x < 0 VERDADERA
  	ESCRIBIR fact;
 	ESCRIBIR x
 FIN_SI
+}
+
+X = 8 + 5

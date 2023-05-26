@@ -4,4 +4,8 @@
     <LocalDebuggerCommandArguments>"C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\EjemploEjecutable.txt"</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommandArguments>C:\Users\rrobe\Desktop\Ing_IT\6 Semestre\Teoria de Lenguajes\AnalizadorLexicoSintactico\EjemploEjecutable.txt</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>
