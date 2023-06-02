@@ -505,9 +505,9 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint16 yyrline[] =
 {
        0,    88,    88,    93,   109,   114,   115,   116,   117,   118,
-     119,   121,   127,   135,   142,   155,   162,   168,   175,   182,
-     189,   196,   203,   210,   215,   222,   229,   235,   243,   253,
-     257,   263,   269,   277
+     119,   121,   127,   135,   142,   154,   161,   167,   174,   181,
+     188,   195,   202,   209,   214,   221,   228,   234,   242,   252,
+     256,   262,   268,   276
 };
 #endif
 
@@ -1545,8 +1545,7 @@ yyreduce:
                               
 
                               (yyval.node) = crearNodoInstruccion(TipoASIGNACION);
-                              (yyval.node)->hijos[0]=(yyvsp[(3) - (3)].node)->hijos[0];
-
+                              (yyval.node)->hijos[0]=(yyvsp[(3) - (3)].node);
                               (yyval.node)->atributos.identificador = (yyvsp[(1) - (3)].chain);
                               
                                                          
@@ -2109,7 +2108,7 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
                   printf("REPEAT\n");
                   break;
                case TipoREAD:
-                  printf("READ\n");
+                  printf("READ %s\n", raiz->atributos.identificador);
                   break;
                case TipoWRITE:
                   printf("WRITE\n");

@@ -1,1 +1,10 @@
-H = X+Y/5
+LEER x; 
+SI x < 0 VERDADERA 
+  	fact = 	1;
+ 	REPETIR
+    		fact  =     fact * x;
+    		x = x - 1
+ 	HASTA x == 1;
+ 	ESCRIBIR fact;
+	ESCRIBIR x
+FIN_SI

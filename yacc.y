@@ -145,8 +145,7 @@ intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion
                               
 
                               $$ = crearNodoInstruccion(TipoASIGNACION);
-                              $$->hijos[0]=$3->hijos[0];
-
+                              $$->hijos[0]=$3;
                               $$->atributos.identificador = $1;
                               
                                                          
@@ -447,7 +446,7 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
                   printf("REPEAT\n");
                   break;
                case TipoREAD:
-                  printf("READ\n");
+                  printf("READ %s\n", raiz->atributos.identificador);
                   break;
                case TipoWRITE:
                   printf("WRITE\n");
