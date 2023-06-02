@@ -145,11 +145,10 @@ intruccion_asignacion   : TOKEN_IDENTIFICADOR TOKEN_ASIGNACION expresion
                               
 
                               $$ = crearNodoInstruccion(TipoASIGNACION);
-                              $$->atributos.identificador = $1;
-                              $3->atributos.operador = $2;
-                              $$->hijos[0] = $3;
-                              $$->numeroLinea = yylineno;
+                              $$->hijos[0]=$3->hijos[0];
 
+                              $$->atributos.identificador = $1;
+                              
                                                          
                            }
 
@@ -210,8 +209,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                            }
                         | expresion_simple
                            {
-                              $$ = crearNodoExpresion(TipoOPERADOR);
-                              $$->hijos[0] = $1;
+                              $$ = $1;
                            }
 
 expresion_simple        : expresion_simple TOKEN_SUMA termino
@@ -230,11 +228,13 @@ expresion_simple        : expresion_simple TOKEN_SUMA termino
                            }
                         | termino
                            {
+                              //Termino
                               $$ = $1;
                            }
 
 termino                 : termino TOKEN_MULT factor
                            {
+                              // Mult
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -242,6 +242,9 @@ termino                 : termino TOKEN_MULT factor
                            }
                         | termino TOKEN_DIV factor
                            {
+                              // Div
+                              printf("Div\n");
+                              printf("\n %s",$1);
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -253,17 +256,20 @@ termino                 : termino TOKEN_MULT factor
                            }
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                            {
-                              $$ = crearNodoExpresion(TipoOPERADOR);
-                              $$->hijos[0] = $2;
+                              //Aqui
+                              $$ = $2;
+                              
                            }
                         | TOKEN_DIGITO
                            {
+                              printf("%s", $1);
                               $$ = crearNodoExpresion(TipoCONSTANTE);
                               $$->atributos.valor = atoi($1);
                            }
                         | TOKEN_IDENTIFICADOR  
                            {
                               add(strdup($1), yylineno, 'U'); // Agregamos a la tabla de simbolos
+                              //Identificador
 
                               $$ = crearNodoExpresion(TipoIDENTIFICADOR);
                               $$->atributos.identificador = $1;                           

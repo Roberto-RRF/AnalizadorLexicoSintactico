@@ -505,9 +505,9 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint16 yyrline[] =
 {
        0,    88,    88,    93,   109,   114,   115,   116,   117,   118,
-     119,   121,   127,   135,   142,   156,   163,   169,   176,   183,
-     190,   197,   204,   211,   217,   224,   231,   236,   243,   250,
-     254,   259,   264,   271
+     119,   121,   127,   135,   142,   155,   162,   168,   175,   182,
+     189,   196,   203,   210,   215,   222,   229,   235,   243,   253,
+     257,   263,   269,   277
 };
 #endif
 
@@ -1545,11 +1545,10 @@ yyreduce:
                               
 
                               (yyval.node) = crearNodoInstruccion(TipoASIGNACION);
-                              (yyval.node)->atributos.identificador = (yyvsp[(1) - (3)].chain);
-                              (yyvsp[(3) - (3)].node)->atributos.operador = (yyvsp[(2) - (3)].chain);
-                              (yyval.node)->hijos[0] = (yyvsp[(3) - (3)].node);
-                              (yyval.node)->numeroLinea = yylineno;
+                              (yyval.node)->hijos[0]=(yyvsp[(3) - (3)].node)->hijos[0];
 
+                              (yyval.node)->atributos.identificador = (yyvsp[(1) - (3)].chain);
+                              
                                                          
                            ;}
     break;
@@ -1634,8 +1633,7 @@ yyreduce:
   case 23:
 
     {
-                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.node)->hijos[0] = (yyvsp[(1) - (1)].node);
+                              (yyval.node) = (yyvsp[(1) - (1)].node);
                            ;}
     break;
 
@@ -1662,6 +1660,7 @@ yyreduce:
   case 26:
 
     {
+                              //Termino
                               (yyval.node) = (yyvsp[(1) - (1)].node);
                            ;}
     break;
@@ -1669,6 +1668,7 @@ yyreduce:
   case 27:
 
     {
+                              // Mult
                               (yyval.node) = crearNodoExpresion(TipoOPERADOR);
                               (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
                               (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
@@ -1679,6 +1679,9 @@ yyreduce:
   case 28:
 
     {
+                              // Div
+                              printf("Div\n");
+                              printf("\n %s",(yyvsp[(1) - (3)].node));
                               (yyval.node) = crearNodoExpresion(TipoOPERADOR);
                               (yyval.node)->hijos[0] = (yyvsp[(1) - (3)].node);
                               (yyval.node)->hijos[1] = (yyvsp[(3) - (3)].node);
@@ -1696,14 +1699,16 @@ yyreduce:
   case 30:
 
     {
-                              (yyval.node) = crearNodoExpresion(TipoOPERADOR);
-                              (yyval.node)->hijos[0] = (yyvsp[(2) - (3)].node);
+                              //Aqui
+                              (yyval.node) = (yyvsp[(2) - (3)].node);
+                              
                            ;}
     break;
 
   case 31:
 
     {
+                              printf("%s", (yyvsp[(1) - (1)].chain));
                               (yyval.node) = crearNodoExpresion(TipoCONSTANTE);
                               (yyval.node)->atributos.valor = atoi((yyvsp[(1) - (1)].chain));
                            ;}
@@ -1713,6 +1718,7 @@ yyreduce:
 
     {
                               add(strdup((yyvsp[(1) - (1)].chain)), yylineno, 'U'); // Agregamos a la tabla de simbolos
+                              //Identificador
 
                               (yyval.node) = crearNodoExpresion(TipoIDENTIFICADOR);
                               (yyval.node)->atributos.identificador = (yyvsp[(1) - (1)].chain);                           
@@ -2100,13 +2106,13 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
                   printf("IF\n");
                   break;
                case TipoREPEAT:
-                  printf("Tipo de instruccion: REPEAT\n");
+                  printf("REPEAT\n");
                   break;
                case TipoREAD:
-                  printf("Tipo de instruccion: READ\n");
+                  printf("READ\n");
                   break;
                case TipoWRITE:
-                  printf("Tipo de instruccion: WRITE\n");
+                  printf("WRITE\n");
                   break;
                default:
                   break;
