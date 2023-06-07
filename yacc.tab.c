@@ -84,6 +84,11 @@ struct nodo *crearNodoInstruccion(InstruccionesTipo);
 struct nodo *crearNodoExpresion(ExpresionesTipo);
 void imprimirArbol(struct nodo *, int);
 
+void generarCodigo(char * nombreArchivo, struct nodo *raiz, int linea);
+void generarArchivo(const char* nombreArchivo);
+void escribirLineaOperacion(char* nombreArchivo, char* operador, char* r, char* s, char* t, char * comentario, char * nLinea);
+void escribirLineaMemoria(const char* nombreArchivo, char * operador, char* r, char* s, char* d, char * comentario, char * nLinea);
+
 
 typedef int TipoToken;
 typedef enum {TipoInstruccion, TipoExpresion} NodoTipo;
@@ -504,10 +509,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    88,    88,    93,   109,   114,   115,   116,   117,   118,
-     119,   121,   127,   135,   142,   154,   161,   167,   174,   181,
-     188,   195,   202,   209,   214,   221,   228,   234,   242,   252,
-     256,   262,   268,   276
+       0,    93,    93,    98,   114,   119,   120,   121,   122,   123,
+     124,   126,   132,   140,   147,   159,   166,   173,   180,   187,
+     194,   201,   208,   215,   220,   227,   234,   240,   248,   258,
+     262,   268,   274,   283
 };
 #endif
 
@@ -1565,7 +1570,8 @@ yyreduce:
 
     {
                               (yyval.node) = crearNodoInstruccion(TipoWRITE);
-                              (yyval.node)->hijos[0] = (yyvsp[(2) - (2)].node);
+                              (yyval.node)->atributos.identificador = (yyvsp[(2) - (2)].node); 
+                              printf("Escribir:AAAAAAAAA %s\n", (yyvsp[(2) - (2)].node)->atributos.identificador);
                            ;}
     break;
 
@@ -1716,6 +1722,7 @@ yyreduce:
   case 32:
 
     {
+                             
                               add(strdup((yyvsp[(1) - (1)].chain)), yylineno, 'U'); // Agregamos a la tabla de simbolos
                               //Identificador
 
@@ -2003,6 +2010,11 @@ int main(int argc, char * argv[])
       printf("Arbol sintactico \n");
 
       imprimirArbol(root, 0);      
+
+      generarArchivo("BorrarDespues.txt");
+
+      generarCodigo("BorrarDespues.txt", root, 0);
+      
       
 
     	return 0;
@@ -2147,3 +2159,137 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
    }
 }
 
+void generarCodigo(char * nombreArchivo, struct nodo *raiz, int linea)
+{
+   int espacioMemoria;
+   char *espacioMemoriaString = malloc(sizeof(char) * 10);
+   
+   if(raiz != NULL)
+   {
+      switch (raiz->tipoNodo) {
+         case TipoInstruccion:
+            switch(raiz->tipo.tipoInstruccion) {
+               case TipoASIGNACION:
+                  
+                  break;
+               case TipoIF:
+                  
+                  break;
+               case TipoREPEAT:
+                  
+                  break;
+               case TipoREAD:
+                  printf("");
+                  // Calcular Espacio Memoria 
+                  espacioMemoria = hash(raiz->atributos.identificador);
+                  // copnvertimos a string
+                  sprintf(espacioMemoriaString, "%d", espacioMemoria);
+
+                  // Linea para pedir numero
+                  escribirLineaOperacion(nombreArchivo, "IN", "0","0","0", "Guardamos numero en registro acumulador", "0");
+
+                  // Linea para mover numero de registros a memoria
+                  escribirLineaMemoria(nombreArchivo, "ST", "0",espacioMemoriaString, "5", "Guardamos numero en memoria", "0");
+                  break;
+               case TipoWRITE:
+                  printf("");
+                  // Calcular Espacio Memoria 
+                  printf("variable %s", raiz->atributos.identificador);
+                  espacioMemoria = hash(raiz->atributos.identificador);
+                  // copnvertimos a string
+                  sprintf(espacioMemoriaString, "%d", espacioMemoria);
+
+                  escribirLineaMemoria(nombreArchivo, "LD", "0",espacioMemoriaString, "5", "Cargamos numero de memoria a registro", "0");
+
+                  escribirLineaOperacion(nombreArchivo, "OUT", "0","0","0", "Imprimimos numero", "0");                  
+                  break;
+               default:
+                  break;
+            }
+            break;
+         case TipoExpresion:
+            switch(raiz->tipo.tipoExpresion)
+            {
+               case TipoOPERADOR:
+                 
+                  break;
+               case TipoCONSTANTE:
+                  
+                  break;
+               case TipoIDENTIFICADOR:
+                 
+                  break;
+               default:
+                  break;
+            }
+         default:
+            break;
+      }
+      generarCodigo(nombreArchivo, raiz->hermano, linea);
+   }
+}
+
+void generarArchivo(const char* nombreArchivo) {
+    FILE* archivo = fopen(nombreArchivo, "w");
+    // Escribimos codigo incicializacion
+    escribirLineaMemoria(nombreArchivo, "LD", "6", "0", "0", "", "0");
+    escribirLineaMemoria(nombreArchivo, "ST", "0", "0", "0", "", "1");
+
+    if (archivo != NULL) {
+        fclose(archivo);
+        printf("Se ha generado el archivo %s.\n", nombreArchivo);
+    } else {
+        printf("No se pudo generar el archivo %s.\n", nombreArchivo);
+    }
+}
+
+void escribirLineaOperacion(char* nombreArchivo, char* operador, char* r, char* s, char* t, char * comentario, char * nLinea) {
+    FILE* archivo = fopen(nombreArchivo, "a");
+    if (archivo != NULL) {
+
+      // Concatenamos las variables en una linea
+      char linea[100];
+      strcpy(linea, nLinea);
+      strcat(linea, ": ");
+      strcat(linea, operador);
+      strcat(linea, " ");
+      strcat(linea, r);
+      strcat(linea, ",");
+      strcat(linea, s);
+      strcat(linea, ",");
+      strcat(linea, t);
+      strcat(linea, " *");
+      strcat(linea, comentario);
+        
+      fprintf(archivo, "%s\n", linea);
+      fclose(archivo);
+
+    } else {
+        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo, nLinea);
+    }
+}
+
+void escribirLineaMemoria(const char* nombreArchivo, char * operador, char* r, char* s, char* d, char * comentario, char * nLinea) {
+    FILE* archivo = fopen(nombreArchivo, "a");
+    if (archivo != NULL) {
+
+      char linea[100];
+      strcpy(linea, nLinea);
+      strcat(linea, ": ");
+      strcat(linea, operador);
+      strcat(linea, " ");
+      strcat(linea, r);
+      strcat(linea, ",");
+      strcat(linea, s);
+      strcat(linea, "(");
+      strcat(linea, d);
+      strcat(linea, ") *");
+      strcat(linea, comentario);
+
+
+        fprintf(archivo, "%s\n", linea);
+        fclose(archivo);
+    } else {
+        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo, nLinea);
+    }
+}

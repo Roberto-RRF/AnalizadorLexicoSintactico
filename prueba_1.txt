@@ -1,4 +1,13 @@
-LEER x; 
+ESCRIBIR E
+
+
+
+
+
+
+
+
+{
 SI x < 0 VERDADERA 
   	fact = 	1;
  	REPETIR
@@ -8,3 +17,4 @@ SI x < 0 VERDADERA
  	ESCRIBIR fact;
 	ESCRIBIR x
 FIN_SI
+}

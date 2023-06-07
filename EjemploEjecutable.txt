@@ -12,7 +12,7 @@ SI x < 0 VERDADERA
  	ESCRIBIR fact;
 	ESCRIBIR x
 FIN_SI
-}
+
 
 X = 8 + 5;
 SI X < 7 VERDADERA
@@ -20,3 +20,6 @@ SI X < 7 VERDADERA
 FALSA
 	Y = 2
 FIN_SI
+}
+
+LEER x;

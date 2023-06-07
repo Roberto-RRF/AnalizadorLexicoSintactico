@@ -1,35 +1,36 @@
 ﻿  lex.yy.c
 lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
   yacc.tab.c
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(118,2): warning C4091: 'typedef ': se ha omitido a la izquierda de 'nodo' cuando no hay ninguna variable declarada
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(352,24): warning C4273: 'malloc': vinculación de DLL incoherente
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(123,2): warning C4091: 'typedef ': se ha omitido a la izquierda de 'nodo' cuando no hay ninguna variable declarada
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(357,24): warning C4273: 'malloc': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(359,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(364,19): warning C4273: 'free': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1544,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1544,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1558,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1558,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1578,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1588,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1598,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1608,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1618,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1628,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1645,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1655,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1674,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1683,38): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'nodo *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1687,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1719,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1719,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1729,43): warning C4133: '=': tipos incompatibles, de 'char *' a 'nodo *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1956,12): warning C4477: 'printf' : la cadena de formato '%d' requiere un argumento de tipo 'int', pero el argumento variádico 1 tiene el tipo 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1965,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1967,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1987,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1993,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2011,16): warning C4028: parámetro formal 1 distinto de la declaración
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2124,26): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'TipoToken'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1549,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1549,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1563,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1563,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1573,94): warning C4133: '=': tipos incompatibles, de 'nodo *' a 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1584,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1594,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1604,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1614,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1624,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1634,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1651,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1661,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1680,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1689,38): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'nodo *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1693,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1726,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1726,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1736,43): warning C4133: '=': tipos incompatibles, de 'char *' a 'nodo *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1963,12): warning C4477: 'printf' : la cadena de formato '%d' requiere un argumento de tipo 'int', pero el argumento variádico 1 tiene el tipo 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1972,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1974,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1994,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2000,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2023,16): warning C4028: parámetro formal 1 distinto de la declaración
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2136,26): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'TipoToken'
   Generando código...
   ProyectoVSCode.vcxproj -> C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\ProyectoVSCode\Debug\ProyectoVSCode.exe
