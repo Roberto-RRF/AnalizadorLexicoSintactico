@@ -38,6 +38,7 @@ struct dataType {
    int usos[MAX_USOS];
    int asignaciones[MAX_USOS];
    int contUsos;
+   int dirMem;
    int contAsignaciones;
 } tabla[TABLE_SIZE];
 
@@ -46,13 +47,15 @@ typedef struct nodo{
    struct nodo *hermano;
    struct nodo *hijos[MAXHIJOS];
    int numeroLinea;
+   char *token;
    NodoTipo tipoNodo;
    union{
       enum InstruccionesTipo tipoInstruccion;
       enum ExpresionesTipo tipoExpresion;
    }tipo;
+
    union{
-      TipoToken operador;
+      char* operador;
       int valor;
       char *identificador;
    } atributos;
@@ -62,6 +65,8 @@ typedef struct nodo{
 int contadorVariables = -1;
 struct nodo *root;
 
+int contDirMemoria = 0;
+
 
 
 
@@ -69,8 +74,13 @@ int LocalidadEscrita = 0;
 int LocalidadMayorEscrita = 0;
 int desplazamientoTemporal = 0;
 
+char * nombreArchivo = "ArchivoSalida.txt";
 
-const char nombreArchivo[] = "ArchivoGenerado.txt";
+FILE* archivo;
+
+
+
+
 
 extern yyin;
 extern yytext;
@@ -190,6 +200,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "<";
                            }
                         | expresion_simple TOKEN_MAYOR_QUE expresion_simple
                            {
@@ -204,6 +215,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = ">";
                            }
                         | expresion_simple TOKEN_DIFERENTE expresion_simple
                            {
@@ -211,6 +223,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "!=";
                            }
                         | expresion_simple TOKEN_MENOR_IGUAL expresion_simple
                            {
@@ -218,6 +231,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "<=";
                            }
                         | expresion_simple TOKEN_MAYOR_IGUAL expresion_simple
                            {
@@ -225,6 +239,7 @@ expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = ">=";
                            }
                         | expresion_simple
                            {
@@ -237,6 +252,7 @@ expresion_simple        : expresion_simple TOKEN_SUMA termino
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "+";
                            }
                         | expresion_simple TOKEN_RESTA termino
                            {
@@ -244,6 +260,7 @@ expresion_simple        : expresion_simple TOKEN_SUMA termino
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "-";
                            }
                         | termino
                            {
@@ -258,6 +275,7 @@ termino                 : termino TOKEN_MULT factor
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "*";
                            }
                         | termino TOKEN_DIV factor
                            {
@@ -265,6 +283,7 @@ termino                 : termino TOKEN_MULT factor
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
                               $$->atributos.operador = $2;
+                              $$->token = "/";
                            }
                         | factor
                            {
@@ -377,6 +396,8 @@ void add(char *identificador, int linea, char caso)
       tabla[indice].primera = linea;
       tabla[indice].contUsos = 0;
       tabla[indice].contAsignaciones = 0;
+      tabla[indice].dirMem = contDirMemoria;
+      contDirMemoria++;
       if(caso=='U')
       {
          
@@ -510,13 +531,12 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
 
 
 void generarArchivo() {
-    FILE* archivo = fopen(nombreArchivo, "w");
+    archivo = fopen(nombreArchivo, "w");
     // Escribimos codigo incicializacion
     escribirLineaMemoria("LD", "6", "0", "0", "", "0");
     escribirLineaMemoria("ST", "0", "0", "0", "", "1");
 
     if (archivo != NULL) {
-        fclose(archivo);
         printf("Se ha generado el archivo %s.\n", nombreArchivo);
     } else {
         printf("No se pudo generar el archivo %s.\n", nombreArchivo);
@@ -524,51 +544,14 @@ void generarArchivo() {
 }
 
 void escribirLineaOperacion(char* operador, char* r, char* s, char* t, char * comentario) {
-    FILE* archivo = fopen(nombreArchivo, "a");
-    if (archivo != NULL) {
-
-      
-      char linea[100];
-      strcpy(linea, operador);
-      strcat(linea, " ");
-      strcat(linea, r);
-      strcat(linea, ",");
-      strcat(linea, s);
-      strcat(linea, ",");
-      strcat(linea, t);
-      strcat(linea, " *");
-      strcat(linea, comentario);
-        
-      fprintf(archivo, "%d: %s\n", LocalidadEscrita++, linea);
-      fclose(archivo);
-
-    } else {
-        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo);
-    }
+   fprintf(archivo, "%d: %s %s,%s,%s *%s\n", LocalidadEscrita++, operador,r, s, t, comentario);
+   fflush(archivo);
 }
 
 void escribirLineaMemoria(char * operador, char* r, char* s, char* d, char * comentario ) {
-    FILE* archivo = fopen(nombreArchivo, "a");
-    if (archivo != NULL) {
-
-      char linea[100];
-      
-      strcpy(linea, operador);
-      strcat(linea, " ");
-      strcat(linea, r);
-      strcat(linea, ",");
-      strcat(linea, s);
-      strcat(linea, "(");
-      strcat(linea, d);
-      strcat(linea, ") *");
-      strcat(linea, comentario);
-
-
-        fprintf(archivo, "%d: %s\n", LocalidadEscrita++, linea);
-        fclose(archivo);
-    } else {
-        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo);
-    }
+      fprintf(archivo, "%d: %s %s,%s(%s) *%s\n", LocalidadEscrita++, operador,r, s, d, comentario);
+      fflush(archivo);
+    
 }
 
 
@@ -578,6 +561,7 @@ void generarCodigo(struct nodo *raiz)
    generarArchivo();
    generarCodigoHermanos(raiz);
    escribirLineaOperacion("HALT", "0", "0", "0", "");
+   fclose(archivo);
 }
 
 
@@ -608,7 +592,7 @@ void generadorInstrucciones(struct nodo *raiz)
          case TipoASIGNACION:
             printf("");
             generarCodigoHermanos(raiz->hijos[0]);
-            int valor = hash(raiz->atributos.identificador);
+            int valor = tabla[hash(raiz->atributos.identificador)].dirMem;
             char valorString[10];
             sprintf(valorString, "%d", valor);
             escribirLineaMemoria("ST", "0", valorString, "5", "Guardamos valor en memoria");
@@ -670,7 +654,7 @@ void generadorInstrucciones(struct nodo *raiz)
          case TipoREAD:
             printf("");
             // Calcular Espacio Memoria 
-            int espacioMemoria = hash(raiz->atributos.identificador);
+            int espacioMemoria = tabla[hash(raiz->atributos.identificador)].dirMem;
             char espacioMemoriaString[10];
             // copnvertimos a string
             sprintf(espacioMemoriaString, "%d", espacioMemoria);
@@ -704,16 +688,17 @@ void generadorExpresiones(struct nodo *raiz)
       {
          case TipoOPERADOR:
             printf("");
-            struct nodo * aux1 = raiz->hijos[0];
-            struct nodo * aux2 = raiz->hijos[1];
+            struct nodo * temp1 = raiz->hijos[0];
+            struct nodo * temp2 = raiz->hijos[1];
 
-            generarCodigoHermanos(aux1);
+            generarCodigoHermanos(temp1);
             escribirLineaMemoria("ST", "0","0","6", "");
 
-            generarCodigoHermanos(aux2);
-            escribirLineaMemoria("LD", "1","0","6", "" , "0");
-
-            if(raiz->atributos.operador == "<")
+            generarCodigoHermanos(temp2);
+            escribirLineaMemoria("LD", "1","0","6", "");
+                                
+           
+            if(raiz->token == "<")
             {
                escribirLineaOperacion("SUB", "0","1","1", "");
                escribirLineaMemoria("JLT", "0","2","7", "");
@@ -722,7 +707,7 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria("LDC", "0","1","0", "");
             }
 
-            if(raiz->atributos.operador == "<=")
+            if(raiz->token == "<=")
             {
                escribirLineaOperacion("SUB", "0","1","1", "");
                escribirLineaMemoria("JLE", "0","2","7", "" );
@@ -731,7 +716,7 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria("LDC", "0","1","0", "" );
             }
 
-            if(raiz->atributos.operador == ">")
+            if(raiz->token == ">")
             {
                escribirLineaOperacion("SUB", "0","1","1", "");
                escribirLineaMemoria("JGT", "0","2","7", "" );
@@ -740,7 +725,7 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria("LDC", "0","1","0", "" );
             }
 
-            if(raiz->atributos.operador == ">=")
+            if(raiz->token == ">=")
             {
                escribirLineaOperacion("SUB", "0","1","1", "");
                escribirLineaMemoria("JGE", "0","2","7", "" );
@@ -749,7 +734,7 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria( "LDC", "0","1","0", "" );
             }
 
-            if(raiz->atributos.operador == "==")
+            if(raiz->token == "==")
             {
                escribirLineaOperacion( "SUB", "0","1","1", "" );
                escribirLineaMemoria( "JEQ", "0","2","7", "" );
@@ -758,7 +743,7 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria("LDC", "0","1","0", "" );
             }
 
-            if(raiz->atributos.operador == "!=")
+            if(raiz->token == "!=")
             {
                escribirLineaOperacion("SUB", "0","1","1", "" );
                escribirLineaMemoria("JNE", "0","2","7", "" );
@@ -767,16 +752,17 @@ void generadorExpresiones(struct nodo *raiz)
                escribirLineaMemoria( "LDC", "0","1","0", "" );
             }
 
-            if(raiz->atributos.operador == "+")
+            if(raiz->token == "+")
                escribirLineaOperacion("ADD", "0","1","0", "OPERADOR +" );
 
-            if(raiz->atributos.operador == "-")
+            if(raiz->token == "-")
                escribirLineaOperacion("SUB", "0","1","0", "OPERAFOR -" );
+            
 
-            if(raiz->atributos.operador == "/")
+            if(raiz->token == "/")
                escribirLineaOperacion("DIV", "0","1","0", "OPERAFOR /" );
 
-            if(raiz->atributos.operador == "*")
+            if(raiz->token == "*")
                escribirLineaOperacion("MUL", "0","1","0", "OPERAFOR *" );
          
 
@@ -791,7 +777,7 @@ void generadorExpresiones(struct nodo *raiz)
             break;
          case TipoIDENTIFICADOR:
             printf("");
-            int direccion = hash(raiz->atributos.identificador);
+            int direccion = tabla[hash(raiz->atributos.identificador)].dirMem;
             char direccionString[10];
             sprintf(direccionString, "%d", direccion);
 
@@ -808,4 +794,3 @@ int desplazamientoLocalidad(int desplazamiento)
       LocalidadMayorEscrita = LocalidadEscrita;
    return LocalidadEscrita - desplazamiento;      
 }
-

@@ -1,25 +1,5 @@
-{ 
- 	Ejemplo de un comentario para el Lenguaje a compilar 
- 	Universidad Panamericana 2020
-
-LEER x; 
-SI x < 0 VERDADERA 
-  	fact = 	1;
+x = 5;
  	REPETIR
-    		fact  =     fact * x;
-    		x = x - 1
- 	HASTA x == 1;
- 	ESCRIBIR fact;
-	ESCRIBIR x
-FIN_SI
-
-
-X = 8 + 5;
-SI X < 7 VERDADERA
-	X = 9
-FALSA
-	Y = 2
-FIN_SI
-}
-
-LEER x;
+			ESCRIBIR x;
+			x =x-1
+HASTA x < 1

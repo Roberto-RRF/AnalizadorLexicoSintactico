@@ -1,52 +1,21 @@
-﻿  lex.yy.c
-lex.yy.c(661,10): warning C4102: 'find_rule': etiqueta sin referencia
-  yacc.tab.c
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(128,2): warning C4091: 'typedef ': se ha omitido a la izquierda de 'nodo' cuando no hay ninguna variable declarada
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(371,24): warning C4273: 'malloc': vinculación de DLL incoherente
+﻿  yacc.tab.c
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(131,2): warning C4091: 'typedef ': se ha omitido a la izquierda de 'nodo' cuando no hay ninguna variable declarada
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(381,24): warning C4273: 'malloc': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(101,15): message : vea la definición anterior de 'malloc'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(378,19): warning C4273: 'free': vinculación de DLL incoherente
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(388,19): warning C4273: 'free': vinculación de DLL incoherente
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt_malloc.h(89,14): message : vea la definición anterior de 'free'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1563,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1563,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1577,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1577,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1598,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1608,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1618,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1628,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1638,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1648,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1665,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1675,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1694,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1704,90): warning C4047: '=': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1735,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1735,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1745,43): warning C4133: '=': tipos incompatibles, de 'char *' a 'nodo *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1981,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1983,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2003,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2009,39): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2033,16): warning C4028: parámetro formal 1 distinto de la declaración
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2146,26): warning C4477: 'printf' : la cadena de formato '%s' requiere un argumento de tipo 'char *', pero el argumento variádico 1 tiene el tipo 'TipoToken'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2177,51): warning C4020: 'escribirLineaMemoria': hay demasiados parámetros reales
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2178,51): warning C4020: 'escribirLineaMemoria': hay demasiados parámetros reales
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2208,16): warning C4473: "printf": no se pasaron suficientes argumentos para la cadena de formato
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2208,16): message : los marcadores de posición y sus parámetros esperan 2 argumentos variádicos, pero se proporcionaron 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2208,16): message : el argumento variádico 2 que falta es requerido por la cadena de formato '%s'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2232,16): warning C4473: "printf": no se pasaron suficientes argumentos para la cadena de formato
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2232,16): message : los marcadores de posición y sus parámetros esperan 2 argumentos variádicos, pero se proporcionaron 1
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2232,16): message : el argumento variádico 2 que falta es requerido por la cadena de formato '%s'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2376,58): warning C4020: 'escribirLineaMemoria': hay demasiados parámetros reales
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2378,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2387,48): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [3]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2396,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2405,48): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [3]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2414,48): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [3]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2423,48): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [3]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2432,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2435,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2438,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2441,47): warning C4047: '==': 'TipoToken' es distinto en los niveles de direccionamiento indirecto de 'char [2]'
-  Generando código...
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1573,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1573,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1587,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1587,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1754,67): warning C4047: 'función': 'char' es distinto en los niveles de direccionamiento indirecto de 'char *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1754,41): warning C4024: 'add': tipos distintos para el parámetro formal y el parámetro real 1
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(1764,43): warning C4133: '=': tipos incompatibles, de 'char *' a 'nodo *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2000,41): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2002,25): warning C4047: '=': 'int' es distinto en los niveles de direccionamiento indirecto de 'FILE *'
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2022,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2028,39): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2052,16): warning C4028: parámetro formal 1 distinto de la declaración
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2198,51): warning C4020: 'escribirLineaMemoria': hay demasiados parámetros reales
+C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\yacc.tab.c(2199,51): warning C4020: 'escribirLineaMemoria': hay demasiados parámetros reales
   ProyectoVSCode.vcxproj -> C:\Users\rrobe\OneDrive\Escritorio\AnalizadorLexicoSintactico\ProyectoVSCode\Debug\ProyectoVSCode.exe
