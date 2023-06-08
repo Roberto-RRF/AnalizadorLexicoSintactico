@@ -1,20 +1,6 @@
-ESCRIBIR E
+x = 5;
 
-
-
-
-
-
-
-
-{
-SI x < 0 VERDADERA 
-  	fact = 	1;
  	REPETIR
-    		fact  =     fact * x;
-    		x = x - 1
- 	HASTA x == 1;
- 	ESCRIBIR fact;
-	ESCRIBIR x
-FIN_SI
-}
+			ESCRIBIR x;
+			x = x - 1
+HASTA x < 1

@@ -3,8 +3,8 @@
 #include <malloc.h>
 #include <string.h>
 #define MAX_ID_SIZE 100
-#define TABLE_SIZE 100
-#define MAX_USOS 10
+#define TABLE_SIZE 251
+#define MAX_USOS 100
 #define MAXHIJOS 3
 
 
@@ -15,10 +15,15 @@ struct nodo *crearNodoInstruccion(InstruccionesTipo);
 struct nodo *crearNodoExpresion(ExpresionesTipo);
 void imprimirArbol(struct nodo *, int);
 
-void generarCodigo(char * nombreArchivo, struct nodo *raiz, int linea);
-void generarArchivo(const char* nombreArchivo);
-void escribirLineaOperacion(char* nombreArchivo, char* operador, char* r, char* s, char* t, char * comentario, char * nLinea);
-void escribirLineaMemoria(const char* nombreArchivo, char * operador, char* r, char* s, char* d, char * comentario, char * nLinea);
+void generarCodigo(struct nodo *raiz);
+void generarArchivo();
+void escribirLineaOperacion(char* operador, char* r, char* s, char* t, char * comentario);
+void escribirLineaMemoria(char * operador, char* r, char* s, char* d, char * comentario);
+void generarCodigoHermanos(struct nodo *raiz);
+void generadorInstrucciones(struct nodo *raiz);
+void generadorExpresiones(struct nodo *raiz);
+int desplazamientoLocalidad(int desplazamiento);
+
 
 
 typedef int TipoToken;
@@ -57,6 +62,15 @@ typedef struct nodo{
 int contadorVariables = -1;
 struct nodo *root;
 
+
+
+
+int LocalidadEscrita = 0;
+int LocalidadMayorEscrita = 0;
+int desplazamientoTemporal = 0;
+
+
+const char nombreArchivo[] = "ArchivoGenerado.txt";
 
 extern yyin;
 extern yytext;
@@ -166,8 +180,8 @@ intruccion_read         : TOKEN_LEER TOKEN_IDENTIFICADOR
 intruccion_write        : TOKEN_ESCRIBIR expresion
                            {
                               $$ = crearNodoInstruccion(TipoWRITE);
-                              $$->atributos.identificador = $2; 
-                              printf("Escribir:AAAAAAAAA %s\n", $2->atributos.identificador);
+                              $$->hijos[0] = $2;
+
                            }
 
 expresion               : expresion_simple TOKEN_MENOR_QUE expresion_simple
@@ -247,9 +261,6 @@ termino                 : termino TOKEN_MULT factor
                            }
                         | termino TOKEN_DIV factor
                            {
-                              // Div
-                              printf("Div\n");
-                              printf("\n %s",$1);
                               $$ = crearNodoExpresion(TipoOPERADOR);
                               $$->hijos[0] = $1;
                               $$->hijos[1] = $3;
@@ -261,13 +272,11 @@ termino                 : termino TOKEN_MULT factor
                            }
 factor                  : TOKEN_PARENTESIS_IZQUIERDO expresion TOKEN_PARENTESIS_DERECHO
                            {
-                              //Aqui
                               $$ = $2;
                               
                            }
                         | TOKEN_DIGITO
                            {
-                              printf("%s", $1);
                               $$ = crearNodoExpresion(TipoCONSTANTE);
                               $$->atributos.valor = atoi($1);
                            }
@@ -298,7 +307,7 @@ int yyerror(char *s) {
     else
       strcpy( mensaje, s );
 
-    printf("Error:  %d", mensaje);
+    printf("Error:  %d", yylineno);
     return 0;
  }
 
@@ -349,9 +358,10 @@ int main(int argc, char * argv[])
 
       imprimirArbol(root, 0);      
 
-      generarArchivo("BorrarDespues.txt");
+      generarCodigo(root);
 
-      generarCodigo("BorrarDespues.txt", root, 0);
+
+     
       
       
 
@@ -497,81 +507,13 @@ void imprimirArbol(struct nodo *raiz, int nivel) {
    }
 }
 
-void generarCodigo(char * nombreArchivo, struct nodo *raiz, int linea)
-{
-   int espacioMemoria;
-   char *espacioMemoriaString = malloc(sizeof(char) * 10);
-   
-   if(raiz != NULL)
-   {
-      switch (raiz->tipoNodo) {
-         case TipoInstruccion:
-            switch(raiz->tipo.tipoInstruccion) {
-               case TipoASIGNACION:
-                  
-                  break;
-               case TipoIF:
-                  
-                  break;
-               case TipoREPEAT:
-                  
-                  break;
-               case TipoREAD:
-                  printf("");
-                  // Calcular Espacio Memoria 
-                  espacioMemoria = hash(raiz->atributos.identificador);
-                  // copnvertimos a string
-                  sprintf(espacioMemoriaString, "%d", espacioMemoria);
 
-                  // Linea para pedir numero
-                  escribirLineaOperacion(nombreArchivo, "IN", "0","0","0", "Guardamos numero en registro acumulador", "0");
 
-                  // Linea para mover numero de registros a memoria
-                  escribirLineaMemoria(nombreArchivo, "ST", "0",espacioMemoriaString, "5", "Guardamos numero en memoria", "0");
-                  break;
-               case TipoWRITE:
-                  printf("");
-                  // Calcular Espacio Memoria 
-                  printf("variable %s", raiz->atributos.identificador);
-                  espacioMemoria = hash(raiz->atributos.identificador);
-                  // copnvertimos a string
-                  sprintf(espacioMemoriaString, "%d", espacioMemoria);
-
-                  escribirLineaMemoria(nombreArchivo, "LD", "0",espacioMemoriaString, "5", "Cargamos numero de memoria a registro", "0");
-
-                  escribirLineaOperacion(nombreArchivo, "OUT", "0","0","0", "Imprimimos numero", "0");                  
-                  break;
-               default:
-                  break;
-            }
-            break;
-         case TipoExpresion:
-            switch(raiz->tipo.tipoExpresion)
-            {
-               case TipoOPERADOR:
-                 
-                  break;
-               case TipoCONSTANTE:
-                  
-                  break;
-               case TipoIDENTIFICADOR:
-                 
-                  break;
-               default:
-                  break;
-            }
-         default:
-            break;
-      }
-      generarCodigo(nombreArchivo, raiz->hermano, linea);
-   }
-}
-
-void generarArchivo(const char* nombreArchivo) {
+void generarArchivo() {
     FILE* archivo = fopen(nombreArchivo, "w");
     // Escribimos codigo incicializacion
-    escribirLineaMemoria(nombreArchivo, "LD", "6", "0", "0", "", "0");
-    escribirLineaMemoria(nombreArchivo, "ST", "0", "0", "0", "", "1");
+    escribirLineaMemoria("LD", "6", "0", "0", "", "0");
+    escribirLineaMemoria("ST", "0", "0", "0", "", "1");
 
     if (archivo != NULL) {
         fclose(archivo);
@@ -581,15 +523,13 @@ void generarArchivo(const char* nombreArchivo) {
     }
 }
 
-void escribirLineaOperacion(char* nombreArchivo, char* operador, char* r, char* s, char* t, char * comentario, char * nLinea) {
+void escribirLineaOperacion(char* operador, char* r, char* s, char* t, char * comentario) {
     FILE* archivo = fopen(nombreArchivo, "a");
     if (archivo != NULL) {
 
-      // Concatenamos las variables en una linea
+      
       char linea[100];
-      strcpy(linea, nLinea);
-      strcat(linea, ": ");
-      strcat(linea, operador);
+      strcpy(linea, operador);
       strcat(linea, " ");
       strcat(linea, r);
       strcat(linea, ",");
@@ -599,22 +539,21 @@ void escribirLineaOperacion(char* nombreArchivo, char* operador, char* r, char* 
       strcat(linea, " *");
       strcat(linea, comentario);
         
-      fprintf(archivo, "%s\n", linea);
+      fprintf(archivo, "%d: %s\n", LocalidadEscrita++, linea);
       fclose(archivo);
 
     } else {
-        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo, nLinea);
+        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo);
     }
 }
 
-void escribirLineaMemoria(const char* nombreArchivo, char * operador, char* r, char* s, char* d, char * comentario, char * nLinea) {
+void escribirLineaMemoria(char * operador, char* r, char* s, char* d, char * comentario ) {
     FILE* archivo = fopen(nombreArchivo, "a");
     if (archivo != NULL) {
 
       char linea[100];
-      strcpy(linea, nLinea);
-      strcat(linea, ": ");
-      strcat(linea, operador);
+      
+      strcpy(linea, operador);
       strcat(linea, " ");
       strcat(linea, r);
       strcat(linea, ",");
@@ -625,9 +564,248 @@ void escribirLineaMemoria(const char* nombreArchivo, char * operador, char* r, c
       strcat(linea, comentario);
 
 
-        fprintf(archivo, "%s\n", linea);
+        fprintf(archivo, "%d: %s\n", LocalidadEscrita++, linea);
         fclose(archivo);
     } else {
-        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo, nLinea);
+        printf("No se pudo abrir el archivo %s para escribir la línea \"%s\".\n", nombreArchivo);
     }
 }
+
+
+
+void generarCodigo(struct nodo *raiz)
+{
+   generarArchivo();
+   generarCodigoHermanos(raiz);
+   escribirLineaOperacion("HALT", "0", "0", "0", "");
+}
+
+
+void generarCodigoHermanos(struct nodo *raiz)
+{
+   if(raiz != NULL)
+   {
+      switch(raiz->tipoNodo)
+      {
+         case TipoInstruccion:
+            generadorInstrucciones(raiz);
+            break;
+         
+         case TipoExpresion:
+            generadorExpresiones(raiz);
+            break;
+         default:
+            break;
+      } 
+      generarCodigoHermanos(raiz->hermano);
+   }
+}
+
+void generadorInstrucciones(struct nodo *raiz)
+{
+      switch(raiz->tipo.tipoInstruccion)
+      {
+         case TipoASIGNACION:
+            printf("");
+            generarCodigoHermanos(raiz->hijos[0]);
+            int valor = hash(raiz->atributos.identificador);
+            char valorString[10];
+            sprintf(valorString, "%d", valor);
+            escribirLineaMemoria("ST", "0", valorString, "5", "Guardamos valor en memoria");
+            break;
+         case TipoIF:
+            printf("");
+            struct nodo *aux1 = raiz->hijos[0];
+            struct nodo *aux2 = raiz->hijos[1];
+            struct nodo *aux3 = raiz->hijos[2]; 
+
+            generarCodigoHermanos(aux1);
+            int etiquetaResguardo1 = desplazamientoLocalidad(1);
+
+            generarCodigoHermanos(aux2);
+            int etiquetaResguardo2 = desplazamientoLocalidad(1);
+
+
+            printf("IF, salto al final desde aqui\n");
+
+            int direccionActual = desplazamientoLocalidad(0);
+
+            LocalidadEscrita = etiquetaResguardo1;
+
+            char direccionActualString[100];
+            sprintf(direccionActualString, "%d", direccionActual);
+
+            escribirLineaMemoria("JEQ", "0", direccionActualString, "0", "Salto al final");
+
+            LocalidadEscrita = LocalidadMayorEscrita;
+
+            generarCodigoHermanos(aux3);
+            direccionActual = desplazamientoLocalidad(0);
+
+            LocalidadEscrita = etiquetaResguardo2;
+
+            sprintf(direccionActualString, "%d", direccionActual);
+            escribirLineaMemoria("LDA", "7", direccionActualString, "0", "Salto al final");
+
+            LocalidadEscrita = LocalidadMayorEscrita;           
+
+
+            break;
+         case TipoREPEAT:
+            printf("");
+            struct nodo *a1 = raiz->hijos[0];
+            struct nodo *a2 = raiz->hijos[1];
+
+            int etiquetaResguardo = desplazamientoLocalidad(0);
+            generarCodigoHermanos(a1);
+            generarCodigoHermanos(a2);
+
+            char etiquetaResguardoString[100];
+            sprintf(etiquetaResguardoString, "%d", etiquetaResguardo);
+
+            escribirLineaMemoria("JEQ", "0", etiquetaResguardoString, "0", "Salto al final");
+            
+            break;
+
+         case TipoREAD:
+            printf("");
+            // Calcular Espacio Memoria 
+            int espacioMemoria = hash(raiz->atributos.identificador);
+            char espacioMemoriaString[10];
+            // copnvertimos a string
+            sprintf(espacioMemoriaString, "%d", espacioMemoria);
+
+            // Linea para pedir numero
+            escribirLineaOperacion("IN", "0","0","0", "Guardamos numero en registro acumulador");
+
+            // Linea para mover numero de registros a memoria
+            escribirLineaMemoria("ST", "0",espacioMemoriaString, "5", "Guardamos numero en memoria");
+            break;
+         case TipoWRITE:
+            printf("");
+
+            struct nodo *auxiliar1 = raiz->hijos[0];
+
+            generarCodigoHermanos(auxiliar1);
+
+            escribirLineaOperacion("OUT", "0","0","0", "Sacamos numero de registro acumulador");
+
+            break;
+         default:
+            break;
+            
+      }
+   
+}
+
+void generadorExpresiones(struct nodo *raiz)
+{
+      switch(raiz->tipo.tipoExpresion)
+      {
+         case TipoOPERADOR:
+            printf("");
+            struct nodo * aux1 = raiz->hijos[0];
+            struct nodo * aux2 = raiz->hijos[1];
+
+            generarCodigoHermanos(aux1);
+            escribirLineaMemoria("ST", "0","0","6", "");
+
+            generarCodigoHermanos(aux2);
+            escribirLineaMemoria("LD", "1","0","6", "" , "0");
+
+            if(raiz->atributos.operador == "<")
+            {
+               escribirLineaOperacion("SUB", "0","1","1", "");
+               escribirLineaMemoria("JLT", "0","2","7", "");
+               escribirLineaMemoria("LDC", "0","0","1", "");
+               escribirLineaMemoria("LDA", "7","1","7", "");
+               escribirLineaMemoria("LDC", "0","1","0", "");
+            }
+
+            if(raiz->atributos.operador == "<=")
+            {
+               escribirLineaOperacion("SUB", "0","1","1", "");
+               escribirLineaMemoria("JLE", "0","2","7", "" );
+               escribirLineaMemoria("LDC", "0","0","1", "" );
+               escribirLineaMemoria("LDA", "7","1","7", "" );
+               escribirLineaMemoria("LDC", "0","1","0", "" );
+            }
+
+            if(raiz->atributos.operador == ">")
+            {
+               escribirLineaOperacion("SUB", "0","1","1", "");
+               escribirLineaMemoria("JGT", "0","2","7", "" );
+               escribirLineaMemoria("LDC", "0","0","1", "" );
+               escribirLineaMemoria("LDA", "7","1","7", "" );
+               escribirLineaMemoria("LDC", "0","1","0", "" );
+            }
+
+            if(raiz->atributos.operador == ">=")
+            {
+               escribirLineaOperacion("SUB", "0","1","1", "");
+               escribirLineaMemoria("JGE", "0","2","7", "" );
+               escribirLineaMemoria( "LDC", "0","0","1", "" );
+               escribirLineaMemoria( "LDA", "7","1","7", "" );
+               escribirLineaMemoria( "LDC", "0","1","0", "" );
+            }
+
+            if(raiz->atributos.operador == "==")
+            {
+               escribirLineaOperacion( "SUB", "0","1","1", "" );
+               escribirLineaMemoria( "JEQ", "0","2","7", "" );
+               escribirLineaMemoria("LDC", "0","0","1", "" );
+               escribirLineaMemoria("LDA", "7","1","7", "");
+               escribirLineaMemoria("LDC", "0","1","0", "" );
+            }
+
+            if(raiz->atributos.operador == "!=")
+            {
+               escribirLineaOperacion("SUB", "0","1","1", "" );
+               escribirLineaMemoria("JNE", "0","2","7", "" );
+               escribirLineaMemoria( "LDC", "0","0","1", "" );
+               escribirLineaMemoria( "LDA", "7","1","7", "" );
+               escribirLineaMemoria( "LDC", "0","1","0", "" );
+            }
+
+            if(raiz->atributos.operador == "+")
+               escribirLineaOperacion("ADD", "0","1","0", "OPERADOR +" );
+
+            if(raiz->atributos.operador == "-")
+               escribirLineaOperacion("SUB", "0","1","0", "OPERAFOR -" );
+
+            if(raiz->atributos.operador == "/")
+               escribirLineaOperacion("DIV", "0","1","0", "OPERAFOR /" );
+
+            if(raiz->atributos.operador == "*")
+               escribirLineaOperacion("MUL", "0","1","0", "OPERAFOR *" );
+         
+
+            break;
+         case TipoCONSTANTE:
+            printf("");
+            int valor = raiz->atributos.valor;
+            char valorString[10];
+            sprintf(valorString, "%d", valor);
+            escribirLineaMemoria("LDC", "0",valorString,"1", " Cargamos constante a registros");
+
+            break;
+         case TipoIDENTIFICADOR:
+            printf("");
+            int direccion = hash(raiz->atributos.identificador);
+            char direccionString[10];
+            sprintf(direccionString, "%d", direccion);
+
+            escribirLineaMemoria("LD", "0",direccionString,"5", " Cargamos direccion a registros");
+            break;
+      }
+   
+}
+
+int desplazamientoLocalidad(int desplazamiento)
+{
+   LocalidadEscrita = LocalidadEscrita + desplazamiento;
+   if(LocalidadMayorEscrita < LocalidadEscrita)
+      LocalidadMayorEscrita = LocalidadEscrita;
+   return LocalidadEscrita - desplazamiento;      
+}
+
